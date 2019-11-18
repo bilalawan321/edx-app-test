@@ -197,6 +197,11 @@ class AndroidMainDashboard(AndroidBasePage):
             str: Login screen Activity Name
          """
 
+        self.account_logout_option = self.global_contents.wait_and_get_element(
+            self.driver,
+            android_elements.account_logout_option
+        )
+
         self.account_logout_option.click()
 
         return self.global_contents.wait_for_android_activity_to_load(

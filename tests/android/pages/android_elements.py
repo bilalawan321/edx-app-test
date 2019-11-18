@@ -6,7 +6,7 @@
 all_images = 'android.widget.ImageView'
 all_image_buttons = 'android.widget.ImageButton'
 all_textviews = 'android.widget.TextView'
-all_listviews = 'android.widget.ListView'
+all_listviews = 'android.widget.FrameLayout'
 
 # NEW LOGISTRATION SCREEN
 new_logistration_logo = 'org.edx.mobile:id/edx_logo'
@@ -73,6 +73,7 @@ new_landing_register_button = 'org.edx.mobile:id/sign_up'
 
 # REGISTRATION SCREEN
 register_all_editfields = 'org.edx.mobile:id/register_edit_text_tilEt'
+register_edx_interest_editfield = 'org.edx.mobile:id/register_edit_text_til'
 register_input_instruction_all_textviews = 'org.edx.mobile:id/input_instructions'
 register_all_spinners = 'org.edx.mobile:id/input_spinner'
 register_screen_tvs = 'android.widget.TextView'
