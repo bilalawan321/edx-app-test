@@ -122,10 +122,9 @@ class AndroidMyCoursesList(AndroidBasePage):
         """
 
         self.get_find_course_button().click()
-
         return self.global_contents.wait_for_android_activity_to_load(
             self.driver,
-            self.global_contents.WEB_VIEW_FIND_COURSES_ACTIVITY_NAME
+            self.global_contents.MAIN_DASHBOARD_ACTIVITY_NAME
         )
 
     def scroll_course_list_and_click_find_course_button(self):

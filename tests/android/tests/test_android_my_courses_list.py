@@ -76,7 +76,7 @@ class TestAndroidMyCoursesList:
         assert android_main_dashboard_page.get_courses_tab().text == strings.MAIN_DASHBOARD_COURSES_TAB
         assert android_main_dashboard_page.get_discovery_tab().text == strings.MAIN_DASHBOARD_DISCOVERY_TAB
 
-        if android_my_courses_list_page.get_my_courses_list():
+        if android_my_courses_list_page.get_my_courses_list_row():
             assert android_my_courses_list_page.get_my_courses_list_row()
             android_my_courses_list_page.get_contents_from_list()
             android_my_courses_list_page.scroll_course_list_and_click_find_course_button()
@@ -111,8 +111,8 @@ class TestAndroidMyCoursesList:
             global_contents.swipe_screen(set_capabilities)
 
         course_discovery_screen = android_my_courses_list_page.load_discovery_screen()
-        assert course_discovery_screen == global_contents.WEB_VIEW_FIND_COURSES_ACTIVITY_NAME
-        set_capabilities.back()
+        assert course_discovery_screen == global_contents.MAIN_DASHBOARD_ACTIVITY_NAME
+        # set_capabilities.back()
         assert android_main_dashboard_page.on_screen() == global_contents.MAIN_DASHBOARD_ACTIVITY_NAME
 
     def test_landscape_smoke(self, set_capabilities, setup_logging):
@@ -148,14 +148,15 @@ class TestAndroidMyCoursesList:
         global_contents = Globals(setup_logging)
 
         global_contents.turn_orientation(set_capabilities, global_contents.LANDSCAPE_ORIENTATION)
+        android_main_dashboard_page.load_courses_tab()
 
         assert android_main_dashboard_page.get_profile_icon().text == strings.BLANK_FIELD
-        assert android_main_dashboard_page.get_title_textview().text == strings.MAIN_DASHBOARD_SCREEN_TITLE
+        assert android_main_dashboard_page.get_title_textview().text == strings.COURSES_DISCOVERY_COURSES_TAB
         assert android_main_dashboard_page.get_menu_icon().text == strings.BLANK_FIELD
         assert android_main_dashboard_page.get_courses_tab().text == strings.MAIN_DASHBOARD_COURSES_TAB
         assert android_main_dashboard_page.get_discovery_tab().text == strings.MAIN_DASHBOARD_DISCOVERY_TAB
 
-        if android_my_courses_list_page.get_my_courses_list():
+        if android_my_courses_list_page.get_my_courses_list_row():
             assert android_my_courses_list_page.get_my_courses_list_row()
             android_my_courses_list_page.get_contents_from_list()
             course_dashboard_screen = android_my_courses_list_page.load_course_details_screen()
@@ -173,8 +174,8 @@ class TestAndroidMyCoursesList:
         assert find_courses_button == strings.MY_COURSES_LIST_FIND_COURSES_BUTTON_ANDROID
 
         course_discovery_screen = android_my_courses_list_page.load_discovery_screen()
-        assert course_discovery_screen == global_contents.WEB_VIEW_FIND_COURSES_ACTIVITY_NAME
-        set_capabilities.back()
+        assert course_discovery_screen == global_contents.MAIN_DASHBOARD_ACTIVITY_NAME
+        # set_capabilities.back()
         assert android_main_dashboard_page.on_screen() == global_contents.MAIN_DASHBOARD_ACTIVITY_NAME
 
         global_contents.turn_orientation(set_capabilities, global_contents.PORTRAIT_ORIENTATION)
