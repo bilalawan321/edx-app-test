@@ -52,7 +52,7 @@ LOGIN_WRONG_CREDENTIALS_ALERT_MSG = ('Please make sure that your user name or e-
                                      ' address and password are correct and try again.')
 LOGIN_WRONG_CREDENTIALS_ALERT_OK = 'OK'
 LOGIN_ANDROID_AGREEMENT = ('By signing in to this app, you agree to the edX End User License Agreement and edX Terms '
-                           'of Service and Honor Code and acknowledge the Privacy Policy')
+                           'of Service and Honor Code and you acknowledge that edX and each Member process your personal data in accordance with the Privacy Policy')
 LOGIN_IOS_AGREEMENT = ('By signing-in to this app, you agree to the edX End User License Agreement and edX Terms '
                        'of Service and Honor Code and acknowledge the Privacy Policy.')
 LOGIN_EULA = 'edX End User License Agreement'
@@ -100,7 +100,7 @@ REGISTER_EDU_DEFAULT_VALUE = 'Highest level of education completed'
 REGISTER_INTERESTED_IN_DEFAULT_VALUE = "Tell us why you're interested in edX"
 REGISTER_AGREEMENT_ANDROID = ('By creating an account, you agree to the edX '
                               'End User License Agreement and edX Terms of '
-                              'Service and Honor Code and acknowledge the Privacy Policy')
+                              'Service and Honor Code and you acknowledge that edX and each Member process your personal data in accordance with the Privacy Policy')
 REGISTER_AGREEMENT = ('By creating an account, you agree to the edX End User License '
                       'Agreement and edX Terms of Service and Honor Code and acknowledge the Privacy Policy.')
 # Register Validate Errors
