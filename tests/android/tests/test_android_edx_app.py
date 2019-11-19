@@ -377,7 +377,7 @@ class TestAndroidedXApp:
         assert android_main_dashboard_page.get_courses_tab().text == strings.MAIN_DASHBOARD_COURSES_TAB
         assert android_main_dashboard_page.get_discovery_tab().text == strings.MAIN_DASHBOARD_DISCOVERY_TAB
 
-        if android_my_courses_list_page.get_my_courses_list():
+        if android_my_courses_list_page.get_my_courses_list_row():
             assert android_my_courses_list_page.get_my_courses_list_row()
             android_my_courses_list_page.get_contents_from_list()
             global_contents.swipe_screen(set_capabilities)
@@ -456,12 +456,12 @@ class TestAndroidedXApp:
         global_contents.turn_orientation(set_capabilities, global_contents.LANDSCAPE_ORIENTATION)
 
         assert android_main_dashboard_page.get_profile_icon().text == strings.BLANK_FIELD
-        assert android_main_dashboard_page.get_title_textview().text == strings.MAIN_DASHBOARD_COURSES_TAB
+        assert android_main_dashboard_page.get_title_textview().text == strings.COURSES_DISCOVERY_COURSES_TAB
         assert android_main_dashboard_page.get_menu_icon().text == strings.BLANK_FIELD
         assert android_main_dashboard_page.get_courses_tab().text == strings.MAIN_DASHBOARD_COURSES_TAB
         assert android_main_dashboard_page.get_discovery_tab().text == strings.MAIN_DASHBOARD_DISCOVERY_TAB
 
-        if android_my_courses_list_page.get_my_courses_list():
+        if android_my_courses_list_page.get_my_courses_list_row():
             assert android_my_courses_list_page.get_my_courses_list_row()
             android_my_courses_list_page.get_contents_from_list()
             course_dashboard_screen = android_my_courses_list_page.load_course_details_screen()
@@ -591,12 +591,13 @@ class TestAndroidedXApp:
         assert password_instructions.text == strings.REGISTER_PASSWORD_INSTRUCTIONS
         assert android_register_page.get_country_spinner().text == strings.BLANK_FIELD
 
-        country_spinner_instructions = android_register_page.get_country_spinner_instructions_textview()
-        assert country_spinner_instructions.text == strings.REGISTER_COUNTRY_INSTRUCTIONS
+        android_register_page.page_scroll_down()
+        assert android_register_page.get_create_my_account_textview().text == strings.REGISTER_CREATE_MY_ACCOUNT
 
         show_optional_fields = android_register_page.get_show_optional_fields_textview()
         assert show_optional_fields.text == strings.REGISTER_SHOW_OPTIONAL_FIELDS_OPTION
-        assert android_register_page.get_create_my_account_textview().text == strings.REGISTER_CREATE_MY_ACCOUNT
+        country_spinner_instructions = android_register_page.get_country_spinner_instructions_textview()
+        assert country_spinner_instructions.text == strings.REGISTER_COUNTRY_INSTRUCTIONS
         assert android_register_page.get_agreement_textview().text == strings.REGISTER_AGREEMENT_ANDROID
 
     def test_show_hide_optional_fields_smoke(self, set_capabilities, setup_logging):
@@ -639,8 +640,8 @@ class TestAndroidedXApp:
         android_register_page = AndroidRegister(set_capabilities, setup_logging)
 
         assert android_register_page.back_and_forth_register()
-        # android_register_page.load_eula_screen()
-        # android_register_page.load_terms_screen()
+        android_register_page.load_eula_screen()
+        android_register_page.load_terms_screen()
         # android_register_page.load_privacy_screen()
 
     def test_required_and_optional_fields_smoke(self, set_capabilities, setup_logging):
@@ -677,7 +678,8 @@ class TestAndroidedXApp:
         email = user_name + '@example.com'
         first_name = global_contents.generate_random_credentials(4)
         last_name = global_contents.generate_random_credentials(4)
-        full_name = (first_name + ' ' + last_name)
+        name = first_name + ' ' + last_name
+        full_name = name
         password = global_contents.generate_random_credentials(8)
         setup_logging.info('Email - {},  Username - {}, Full Name - {}, Password -{}'.format(
             email,
@@ -686,6 +688,7 @@ class TestAndroidedXApp:
             password
         ))
 
+        android_register_page.back_and_forth_register()
         register_output = android_register_page.register(email,
                                                          full_name,
                                                          user_name,

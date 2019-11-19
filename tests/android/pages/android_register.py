@@ -450,7 +450,8 @@ class AndroidRegister(AndroidBasePage):
         self.get_user_name_editfield().send_keys(user_name)
         self.driver.hide_keyboard()
 
-        self.get_password_editfield().click
+        self.get_password_editfield().click()
+
         self.get_password_editfield().send_keys(password)
         self.driver.hide_keyboard()
 
@@ -504,7 +505,7 @@ class AndroidRegister(AndroidBasePage):
 
             if self.global_contents.flag:
                 self.log.info('scrolling - {}'.format(scroll))
-                self.global_contents.scroll_screen(self.driver, countries_list_values[10], countries_list_values[1])
+                self.global_contents.scroll_screen(self.driver, countries_list_values[8], countries_list_values[1])
             else:
                 break
 
@@ -623,8 +624,9 @@ class AndroidRegister(AndroidBasePage):
         Returns:
               Webdriver element: Username validation Element
         """
+
         self.global_contents.scroll_from_element(self.driver, self.get_password_editfield())
-        
+
         return self.global_contents.get_all_views_on_screen_by_id(
             self.driver,
             android_elements.register_validate_editfield_error_textview)[self.global_contents.second_existence]
