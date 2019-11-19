@@ -143,6 +143,7 @@ class AndroidNewLanding(AndroidBasePage):
 
         search_courses = self.get_search_course_editfield()
         search_courses.clear()
+        search_courses.click()
         search_courses.send_keys(course_name)
         self.driver.press_keycode(self.global_contents.android_enter_key)
 
