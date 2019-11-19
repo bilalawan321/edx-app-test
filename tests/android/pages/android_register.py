@@ -168,6 +168,7 @@ class AndroidRegister(AndroidBasePage):
         Returns:
               webdriver element: Password Element
         """
+
         return self.global_contents.get_all_views_on_screen_by_id(
             self.driver,
             android_elements.register_all_editfields)[self.global_contents.fourth_existence]
@@ -450,6 +451,7 @@ class AndroidRegister(AndroidBasePage):
         self.driver.hide_keyboard()
 
         self.get_password_editfield().click()
+
         self.get_password_editfield().send_keys(password)
         self.driver.hide_keyboard()
 
@@ -656,3 +658,4 @@ class AndroidRegister(AndroidBasePage):
 
     def page_scroll_down(self):
         self.global_contents.scroll_from_element(self.driver, self.get_password_editfield())
+

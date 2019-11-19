@@ -122,7 +122,6 @@ class AndroidMyCoursesList(AndroidBasePage):
         """
 
         self.get_find_course_button().click()
-
         return self.global_contents.wait_for_android_activity_to_load(
             self.driver,
             self.global_contents.MAIN_DASHBOARD_ACTIVITY_NAME
