@@ -148,7 +148,6 @@ class AndroidMyCoursesList(AndroidBasePage):
                     course_details_list.append(details.text)
 
             if self.get_find_course_button():
-                self.get_find_course_button().click()
                 break
 
             self.global_contents.scroll_from_element(self.driver, course_list_last_element)
