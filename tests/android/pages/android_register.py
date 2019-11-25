@@ -279,8 +279,6 @@ class AndroidRegister(AndroidBasePage):
               webdriver element: Create My Account Element
         """
 
-        # self.global_contents.scroll_from_element(self.driver, self.get_password_editfield())
-
         return self.global_contents.wait_and_get_element(
             self.driver,
             android_elements.register_create_my_account_textview
@@ -566,7 +564,6 @@ class AndroidRegister(AndroidBasePage):
              bool: Returns True if Registration Error is visible
         """
 
-        # self.global_contents.scroll_from_element(self.driver, self.get_password_editfield())
         self.get_create_my_account_textview().click()
 
         output = self.global_contents.wait_for_element_visibility(
@@ -645,8 +642,8 @@ class AndroidRegister(AndroidBasePage):
             android_elements.register_validate_editfield_error_textview)[self.global_contents.third_existence]
         if (password_field_error.text != strings.REGISTER_PASSWORD_BLANK_ERROR):
             password_field_error = self.global_contents.get_all_views_on_screen_by_id(
-            self.driver,
-            android_elements.register_validate_editfield_error_textview)[self.global_contents.fourth_existence]
+                self.driver,
+                android_elements.register_validate_editfield_error_textview)[self.global_contents.fourth_existence]
             return password_field_error
         else:
             return password_field_error
