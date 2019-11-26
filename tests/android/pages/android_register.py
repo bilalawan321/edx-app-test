@@ -522,6 +522,10 @@ class AndroidRegister(AndroidBasePage):
             list: list of text views
         """
 
+        self.global_contents.wait_for_element_visibility(
+            self.driver,
+            android_elements.all_listviews
+        )
         countries_list_container = self.driver.find_elements_by_class_name(android_elements.all_listviews)
 
         countries_list_values = countries_list_container[
