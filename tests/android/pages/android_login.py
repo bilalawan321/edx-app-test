@@ -259,8 +259,10 @@ class AndroidLogin(AndroidBasePage):
         """
 
         self.get_username_editfield().clear()
+        self.get_username_editfield().click()
         self.get_username_editfield().send_keys(user_name)
         self.driver.back()
+        self.get_password_editfield().click()
         self.get_password_editfield().send_keys(password)
         self.driver.back()
         self.get_sign_in_button().click()
@@ -336,7 +338,11 @@ class AndroidLogin(AndroidBasePage):
         """
 
         self.get_forgot_password_textview().click()
-        return self.driver.find_element_by_id(android_elements.login_reset_password_alert)
+
+        return self.global_contents.wait_and_get_element(
+            self.driver,
+            android_elements.login_reset_password_alert
+        )
 
     def get_forgot_password_alert_title(self):
         """
