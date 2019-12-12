@@ -66,7 +66,7 @@ class AndroidMyCoursesList(AndroidBasePage):
 
         return self.global_contents.wait_and_get_element(
             self.driver,
-            android_elements.my_courses_list_find_course_button
+            android_elements.my_courses_list_find_course_button,1
         )
 
     def get_contents_from_list(self):
@@ -139,7 +139,6 @@ class AndroidMyCoursesList(AndroidBasePage):
 
         while True:
             course_list_last_element = self.get_course_list()[-1]
-
             course_names = self.get_all_course_names()
             course_details = self.get_all_course_details()
             for names, details in zip(course_names, course_details):
@@ -155,7 +154,6 @@ class AndroidMyCoursesList(AndroidBasePage):
         count = len(course_details_list)
         for i in range(count - 1):
             course_title_details.append([course_names_list[i], course_details_list[i]])
-            print("course and its date: ", course_title_details)
 
     def get_course_list(self):
         """
