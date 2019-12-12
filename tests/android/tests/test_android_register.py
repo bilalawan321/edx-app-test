@@ -156,7 +156,7 @@ class TestAndroidRegister:
         android_register_page = AndroidRegister(set_capabilities, setup_logging)
         global_contents = Globals(setup_logging)
 
-        user_name = global_contents.generate_random_credentials(4)
+        user_name = global_contents.generate_random_credentials(5)
         email = user_name + '@example.com'
         first_name = global_contents.generate_random_credentials(4)
         last_name = global_contents.generate_random_credentials(4)
