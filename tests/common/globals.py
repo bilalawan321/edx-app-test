@@ -110,7 +110,7 @@ class Globals:
         element = None
         time_out = self.maximum_timeout
 
-        if optional_time != None:
+        if optional_time is not None:
             time_out = optional_time
 
         try:

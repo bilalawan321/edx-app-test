@@ -66,7 +66,8 @@ class AndroidMyCoursesList(AndroidBasePage):
 
         return self.global_contents.wait_and_get_element(
             self.driver,
-            android_elements.my_courses_list_find_course_button,1
+            android_elements.my_courses_list_find_course_button,
+            1
         )
 
     def get_contents_from_list(self):
