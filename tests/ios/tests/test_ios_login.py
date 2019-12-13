@@ -165,7 +165,8 @@ class TestIosLogin:
         assert ios_login_page.get_forgot_password_alert_title().text == strings.LOGIN_RESET_PASSWORD_ALERT_TITLE
         assert ios_login_page.get_forgot_password_alert_msg().text == strings.LOGIN_RESET_PASSWORD_ALERT_MSG
         assert ios_login_page.get_forgot_password_alert_ok_button().text == strings.LOGIN_RESET_PASSWORD_ALERT_OK
-        assert (ios_login_page.get_forgot_password_alert_cancel_button().text == strings.LOGIN_RESET_PASSWORD_ALERT_CANCEL)
+        assert (ios_login_page.get_forgot_password_alert_cancel_button().text ==
+            strings.LOGIN_RESET_PASSWORD_ALERT_CANCEL)
         assert ios_login_page.close_forgot_password_alert()
 
         # global_contents.scroll_from_element(set_capabilities, ios_login_page.get_forgot_password_textview())
