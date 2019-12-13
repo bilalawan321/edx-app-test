@@ -228,6 +228,10 @@ class IosLogin(IosBasePage):
         """
 
         self.get_eula_textview().click()
+        self.global_contents.wait_for_element_visibility(
+            self.driver,
+            self.get_agreement_close_button()
+        )
         self.get_agreement_close_button().click()
 
         return self.get_sign_in_button()
@@ -241,6 +245,10 @@ class IosLogin(IosBasePage):
         """
 
         self.get_terms_textview().click()
+        self.global_contents.wait_for_element_visibility(
+            self.driver,
+            self.get_agreement_close_button()
+        )
         self.get_agreement_close_button().click()
 
         return self.get_sign_in_button()
@@ -254,6 +262,10 @@ class IosLogin(IosBasePage):
         """
 
         self.get_privacy_textview().click()
+        self.global_contents.wait_for_element_visibility(
+            self.driver,
+            self.get_agreement_close_button()
+        )
         self.get_agreement_close_button().click()
 
         return self.get_sign_in_button()
@@ -270,10 +282,11 @@ class IosLogin(IosBasePage):
         Returns:
             str: Whats New screen Title
         """
-
+        self.get_username_editfield().click()
         self.get_username_editfield().clear()
         self.get_username_editfield().send_keys(user_name)
 
+        self.get_password_editfield().click()
         self.get_password_editfield().send_keys(password)
         self.get_logo().click()
         self.get_sign_in_button().click()
