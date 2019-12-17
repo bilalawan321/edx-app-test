@@ -61,6 +61,7 @@ LOGIN_PRIVACY = 'Privacy Policy'
 
 # WHATS NEW SCREEN
 WHATS_NEW_DONE = 'Done'
+CLOSE_BUTTON_TEXT = 'Close'
 
 # MAIN DASHBOARD SCREEN
 MAIN_DASHBOARD_PROFILE = 'Pofile'  # Typo from dev side
