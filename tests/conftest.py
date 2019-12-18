@@ -53,6 +53,7 @@ def set_capabilities(setup_logging):
         desired_capabilities['appPackage'] = globals_contents.AUT_PACKAGE_NAME
         desired_capabilities['appActivity'] = Globals.SPLASH_ACTIVITY_NAME
         desired_capabilities['appWaitActivity'] = Globals.NEW_LOGISTRATION_ACTIVITY_NAME
+        desired_capabilities['automationName'] = 'uiautomator2'
 
     elif globals_contents.target_environment == strings.IOS:
         desired_capabilities['platformName'] = strings.IOS

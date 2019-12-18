@@ -7,6 +7,9 @@ from tests.android.pages.android_base_page import AndroidBasePage
 from tests.android.pages.android_new_landing import AndroidNewLanding
 from tests.common.globals import Globals
 from tests.common import strings
+import base64
+import time
+import re
 
 
 class AndroidRegister(AndroidBasePage):
@@ -305,15 +308,30 @@ class AndroidRegister(AndroidBasePage):
              bool: Returns True if app is back on Login screen from EULA
         """
         self.global_contents.scroll_from_element(self.driver, self.get_password_editfield())
+        time.sleep(2)
+        path = 'images/edX-enduser-lisence.png'
+        # with open("images/edX-enduser-lisence.png", "rb") as img_file:
+        #     my_string = base64.b64encode(img_file.read())
+        self.driver.update_settings({"imageMatchThreshold": 0.3})
+        # self.driver.update_settings({"fixImageTemplateScale": True})
+        # self.driver.update_settings({"imageElementTapStrategy": 'touchActions'})
+        el = self.driver.find_element_by_image('images/privacy-policy.png')
+        # el1 = self.get_agreement_textview().text
+        # print(re.findall("Privacy Policy", el1))
+        # el2 = re.findall("Privacy Policy", el1)
+        el.click()
+        el.click()
+        time.sleep(2)
 
-        self.global_contents.get_element_coordinates(self.driver, android_elements.register_agreement_textview)
+        # self.global_contents.get_element_coordinates(self.driver, android_elements.register_agreement_textview)
 
-        target_x_position = self.global_contents.element_x_position + int(
-            self.global_contents.element_width / 2) + 200
+        # target_x_position = self.global_contents.element_x_position + int(
+        #     self.global_contents.element_width / 2) + 200
 
-        target_y_position = self.global_contents.element_y_position + int(self.global_contents.element_height / 4)
+        # target_y_position = self.global_contents.element_y_position + int(self.global_contents.element_height / 4)
 
-        return self.navigate_eula(target_x_position, target_y_position)
+        # return self.navigate_eula(target_x_position, target_y_position)
+        return el
 
     def load_terms_screen(self):
         """
@@ -324,7 +342,6 @@ class AndroidRegister(AndroidBasePage):
         """
 
         self.global_contents.get_element_coordinates(self.driver, android_elements.register_agreement_textview)
-
         target_x_position = self.global_contents.element_x_position + int(self.global_contents.element_width / 2)
         target_y_position = self.global_contents.element_y_position + int(self.global_contents.element_height / 2)
 
@@ -526,6 +543,7 @@ class AndroidRegister(AndroidBasePage):
             self.driver,
             android_elements.all_listviews
         )
+    
         countries_list_container = self.driver.find_elements_by_class_name(android_elements.all_listviews)
 
         countries_list_values = countries_list_container[

@@ -122,7 +122,7 @@ class TestAndroidRegister:
         android_register_page = AndroidRegister(set_capabilities, setup_logging)
 
         assert android_register_page.back_and_forth_register()
-        assert android_register_page.load_eula_screen()
+        android_register_page.load_eula_screen().click()
         # assert android_register_page.load_terms_screen()
         # assert android_register_page.load_privacy_screen()
 
@@ -207,3 +207,4 @@ class TestAndroidRegister:
         setup_logging.info('{} is successfully logged in'.format(user_name))
 
         setup_logging.info('-- Ending {} Test Case'.format(TestAndroidRegister.__name__))
+
