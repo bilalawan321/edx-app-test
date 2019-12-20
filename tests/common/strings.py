@@ -63,7 +63,7 @@ LOGIN_PRIVACY = 'Privacy Policy'
 WHATS_NEW_DONE = 'Done'
 
 # MAIN DASHBOARD SCREEN
-MAIN_DASHBOARD_PROFILE = 'Pofile'  # Typo from dev side
+MAIN_DASHBOARD_PROFILE = 'Profile'  # Typo from dev side
 MAIN_DASHBOARD_SCREEN_TITLE = 'Courses'
 MAIN_DASHBOARD_NAVIGATION_MENU = 'Navigation Menu'
 MAIN_DASHBOARD_COURSES_TAB = 'Courses'
