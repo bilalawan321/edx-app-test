@@ -185,7 +185,7 @@ class TestIosRegister:
         ios_main_dashboard_page = IosMainDashboard(set_capabilities, setup_logging)
         global_contents = Globals(setup_logging)
 
-        user_name = global_contents.generate_random_credentials(4)
+        user_name = global_contents.generate_random_credentials(5)
         email = user_name + '@example.com'
         first_name = global_contents.generate_random_credentials(4)
         last_name = global_contents.generate_random_credentials(4)
@@ -199,7 +199,7 @@ class TestIosRegister:
 
         assert ios_whats_new_page.get_title_textview()
         assert ios_whats_new_page.navigate_features().text == strings.WHATS_NEW_DONE
-        assert ios_whats_new_page.exit_features().text == strings.MAIN_DASHBOARD_SCREEN_TITLE
+        assert ios_whats_new_page.exit_features().text == strings.BLANK_FIELD
 
         logout_option = ios_main_dashboard_page.get_account_options()[global_contents.fourth_existence].text
         assert logout_option == strings.ACCOUNT_LOGOUT
@@ -208,6 +208,6 @@ class TestIosRegister:
 
         assert ios_login_page.login(user_name, password, False)
         setup_logging.info('{} is successfully logged in'.format(user_name))
-        assert ios_main_dashboard_page.get_title_textview_portrait_mode().text == strings.MAIN_DASHBOARD_SCREEN_TITLE
+        assert ios_main_dashboard_page.get_title_textview_portrait_mode().text == strings.BLANK_FIELD
 
         setup_logging.info('-- Ending Test Case')
