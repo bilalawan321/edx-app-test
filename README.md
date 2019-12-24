@@ -57,3 +57,12 @@ Automated testing for edX Android and iOS mobile applications.
 - `pytest -v <test case name>` to run specific test case
 
 - `pytest -v <test case name> --html=report.html` to run specific test case and create html report at end of execution
+
+#### Find-element-by-image-installation
+- npm install opencv4nodejs
+- Create images folder in the root directory and plac all images in it, for which you need to find its elements.
+- update appium settings, Add this line before finding image method
+      "self.driver.update_settings({"imageMatchThreshold": 0.3})"
+- Implement find by image functionality by this line and add exact image path as parameter to this function:
+      " self.driver.find_element_by_image('path to image')"
+- This method will return an element and you can use this element according to your requirement.

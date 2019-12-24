@@ -66,7 +66,8 @@ class AndroidMyCoursesList(AndroidBasePage):
 
         return self.global_contents.wait_and_get_element(
             self.driver,
-            android_elements.my_courses_list_find_course_button
+            android_elements.my_courses_list_find_course_button,
+            1
         )
 
     def get_contents_from_list(self):
@@ -125,7 +126,7 @@ class AndroidMyCoursesList(AndroidBasePage):
 
         return self.global_contents.wait_for_android_activity_to_load(
             self.driver,
-            self.global_contents.WEB_VIEW_FIND_COURSES_ACTIVITY_NAME
+            self.global_contents.MAIN_DASHBOARD_ACTIVITY_NAME
         )
 
     def scroll_course_list_and_click_find_course_button(self):
@@ -139,7 +140,6 @@ class AndroidMyCoursesList(AndroidBasePage):
 
         while True:
             course_list_last_element = self.get_course_list()[-1]
-
             course_names = self.get_all_course_names()
             course_details = self.get_all_course_details()
             for names, details in zip(course_names, course_details):
@@ -148,7 +148,6 @@ class AndroidMyCoursesList(AndroidBasePage):
                     course_details_list.append(details.text)
 
             if self.get_find_course_button():
-                self.get_find_course_button().click()
                 break
 
             self.global_contents.scroll_from_element(self.driver, course_list_last_element)
@@ -156,7 +155,6 @@ class AndroidMyCoursesList(AndroidBasePage):
         count = len(course_details_list)
         for i in range(count - 1):
             course_title_details.append([course_names_list[i], course_details_list[i]])
-            print("course and its date: ", course_title_details)
 
     def get_course_list(self):
         """

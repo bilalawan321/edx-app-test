@@ -6,6 +6,10 @@ from tests.android.pages import android_elements
 from tests.android.pages.android_base_page import AndroidBasePage
 from tests.android.pages.android_new_landing import AndroidNewLanding
 from tests.common.globals import Globals
+from tests.common import strings
+import base64
+import time
+import re
 
 
 class AndroidRegister(AndroidBasePage):
@@ -266,9 +270,9 @@ class AndroidRegister(AndroidBasePage):
               webdriver element: Why Interested editfield Element
         """
 
-        return self.global_contents.get_all_views_on_screen_by_id(
+        return self.global_contents.wait_and_get_element(
             self.driver,
-            android_elements.register_all_editfields)[self.global_contents.sixth_existence]
+            android_elements.register_edx_interest_editfield)
 
     def get_create_my_account_textview(self):
         """
@@ -277,8 +281,6 @@ class AndroidRegister(AndroidBasePage):
         Returns:
               webdriver element: Create My Account Element
         """
-
-        self.global_contents.scroll_from_element(self.driver, self.get_password_editfield())
 
         return self.global_contents.wait_and_get_element(
             self.driver,
@@ -306,15 +308,30 @@ class AndroidRegister(AndroidBasePage):
              bool: Returns True if app is back on Login screen from EULA
         """
         self.global_contents.scroll_from_element(self.driver, self.get_password_editfield())
+        time.sleep(2)
+        path = 'images/edX-enduser-lisence.png'
+        # with open("images/edX-enduser-lisence.png", "rb") as img_file:
+        #     my_string = base64.b64encode(img_file.read())
+        self.driver.update_settings({"imageMatchThreshold": 0.3})
+        # self.driver.update_settings({"fixImageTemplateScale": True})
+        # self.driver.update_settings({"imageElementTapStrategy": 'touchActions'})
+        el = self.driver.find_element_by_image('images/privacy-policy.png')
+        # el1 = self.get_agreement_textview().text
+        # print(re.findall("Privacy Policy", el1))
+        # el2 = re.findall("Privacy Policy", el1)
+        el.click()
+        el.click()
+        time.sleep(2)
 
-        self.global_contents.get_element_coordinates(self.driver, android_elements.register_agreement_textview)
+        # self.global_contents.get_element_coordinates(self.driver, android_elements.register_agreement_textview)
 
-        target_x_position = self.global_contents.element_x_position + int(
-            self.global_contents.element_width / 2) + 200
+        # target_x_position = self.global_contents.element_x_position + int(
+        #     self.global_contents.element_width / 2) + 200
 
-        target_y_position = self.global_contents.element_y_position + int(self.global_contents.element_height / 4)
+        # target_y_position = self.global_contents.element_y_position + int(self.global_contents.element_height / 4)
 
-        return self.navigate_eula(target_x_position, target_y_position)
+        # return self.navigate_eula(target_x_position, target_y_position)
+        return el
 
     def load_terms_screen(self):
         """
@@ -325,7 +342,6 @@ class AndroidRegister(AndroidBasePage):
         """
 
         self.global_contents.get_element_coordinates(self.driver, android_elements.register_agreement_textview)
-
         target_x_position = self.global_contents.element_x_position + int(self.global_contents.element_width / 2)
         target_y_position = self.global_contents.element_y_position + int(self.global_contents.element_height / 2)
 
@@ -414,6 +430,7 @@ class AndroidRegister(AndroidBasePage):
             if (self.driver.current_activity == Globals.DISCOVERY_LAUNCH_ACTIVITY_NAME and
                     android_new_landing_page.load_register_screen() == Globals.REGISTER_ACTIVITY_NAME):
                 self.log.info('Register screen is successfully loaded')
+                self.global_contents.flag = True
             else:
                 self.log.error('New Landing screen is not loaded')
                 self.global_contents.flag = False
@@ -438,20 +455,25 @@ class AndroidRegister(AndroidBasePage):
             str: Whats New Activity Name
         """
 
+        self.get_email_editfield().click()
         self.get_email_editfield().send_keys(email)
         self.driver.hide_keyboard()
 
+        self.get_full_name_editfield().click()
         self.get_full_name_editfield().send_keys(full_name)
         self.driver.hide_keyboard()
 
+        self.get_user_name_editfield().click()
         self.get_user_name_editfield().send_keys(user_name)
         self.driver.hide_keyboard()
 
+        self.get_password_editfield().click()
         self.get_password_editfield().send_keys(password)
         self.driver.hide_keyboard()
 
         self.select_country(country)
 
+        self.page_scroll_down()
         self.get_create_my_account_textview().click()
 
         return self.global_contents.wait_for_android_activity_to_load(
@@ -499,7 +521,7 @@ class AndroidRegister(AndroidBasePage):
 
             if self.global_contents.flag:
                 self.log.info('scrolling - {}'.format(scroll))
-                self.global_contents.scroll_screen(self.driver, countries_list_values[10], countries_list_values[1])
+                self.global_contents.scroll_screen(self.driver, countries_list_values[8], countries_list_values[1])
             else:
                 break
 
@@ -517,10 +539,15 @@ class AndroidRegister(AndroidBasePage):
             list: list of text views
         """
 
+        self.global_contents.wait_for_element_visibility(
+            self.driver,
+            android_elements.all_listviews
+        )
+    
         countries_list_container = self.driver.find_elements_by_class_name(android_elements.all_listviews)
 
         countries_list_values = countries_list_container[
-            self.global_contents.fourth_existence].find_elements_by_class_name(android_elements.all_textviews)
+            self.global_contents.second_existence].find_elements_by_class_name(android_elements.all_textviews)
         countries = len(countries_list_values)
         if countries > 0:
             self.log.info('Total - {} text views found in list view'.format(
@@ -559,7 +586,6 @@ class AndroidRegister(AndroidBasePage):
              bool: Returns True if Registration Error is visible
         """
 
-        self.global_contents.scroll_from_element(self.driver, self.get_password_editfield())
         self.get_create_my_account_textview().click()
 
         output = self.global_contents.wait_for_element_visibility(
@@ -632,9 +658,17 @@ class AndroidRegister(AndroidBasePage):
               Webdriver element: Password validation Element
         """
 
-        return self.global_contents.get_all_views_on_screen_by_id(
+        self.page_scroll_down()
+        password_field_error = self.global_contents.get_all_views_on_screen_by_id(
             self.driver,
-            android_elements.register_validate_editfield_error_textview)[self.global_contents.fourth_existence]
+            android_elements.register_validate_editfield_error_textview)[self.global_contents.third_existence]
+        if (password_field_error.text != strings.REGISTER_PASSWORD_BLANK_ERROR):
+            password_field_error = self.global_contents.get_all_views_on_screen_by_id(
+                self.driver,
+                android_elements.register_validate_editfield_error_textview)[self.global_contents.fourth_existence]
+            return password_field_error
+        else:
+            return password_field_error
 
     def get_country_validation_textview(self):
         """
@@ -648,3 +682,6 @@ class AndroidRegister(AndroidBasePage):
             self.driver,
             android_elements.register_validate_spinner_error_textview
         )
+
+    def page_scroll_down(self):
+        self.global_contents.scroll_from_element(self.driver, self.get_password_editfield())

@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/edx/edx-app-test",
   "dependencies": {
-    "appium": "^1.15.0"
+    "appium": "^1.15.0",
+    "opencv4nodejs": "^5.5.0"
   }
 }
