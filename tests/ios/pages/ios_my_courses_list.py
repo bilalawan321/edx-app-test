@@ -54,10 +54,10 @@ class IosMyCoursesList(IosBasePage):
 
         course_name = self.global_contents.get_all_views_on_ios_screen(
             self.driver,
-            ios_elements.my_courses_list_course_name
+            ios_elements.my_courses_list_course_row
         )
 
-        return course_name[1] if course_name[1] else course_name[1]
+        return course_name[0] if course_name[0] else course_name[0]
 
     def get_my_course_details(self):
         """
@@ -113,7 +113,6 @@ class IosMyCoursesList(IosBasePage):
             self.driver,
             ios_elements.course_details_last_accessed_textview
         )
-
         course_details = self.global_contents.get_all_views_on_ios_screen(
             self.driver,
             ios_elements.all_textviews

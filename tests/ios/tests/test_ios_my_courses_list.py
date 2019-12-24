@@ -93,8 +93,8 @@ class TestIosMyCoursesList:
 
         if ios_my_courses_list.get_my_courses_list_row():
             course_name = ios_my_courses_list.get_my_courses_list_row().text
-            # assert ios_my_courses_list.load_course_details_screen().text == course_name
-            # set_capabilities.back()
+            assert ios_my_courses_list.load_course_details_screen().text in course_name
+            set_capabilities.back()
 
         assert ios_my_courses_list.load_discovery_screen().text == strings.COURSES_DISCOVERY_BROWSE_BY_SUBJECT_LABEL
         setup_logging.info(set_capabilities.context)
@@ -134,8 +134,8 @@ class TestIosMyCoursesList:
             assert ios_my_courses_list.get_my_course_name()
             assert ios_my_courses_list.get_my_course_details()
             course_name = ios_my_courses_list.get_my_courses_list_row().text
-            # assert ios_my_courses_list.load_course_details_screen().text == course_name
-            # set_capabilities.back()
+            assert ios_my_courses_list.load_course_details_screen().text in course_name
+            set_capabilities.back()
         else:
             setup_logging.info('No course enrolled by this user.')
 
