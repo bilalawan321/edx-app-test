@@ -76,7 +76,7 @@ class IosMainDashboard(IosBasePage):
         return self.global_contents.get_all_views_on_ios_screen(
             self.driver,
             ios_elements.all_buttons
-        )[self.global_contents.fourth_existence]
+        )[self.global_contents.fifth_existence]
 
     def get_account_options(self):
         """

@@ -146,7 +146,22 @@ class IosMyCoursesList(IosBasePage):
 
         self.get_find_course_button().click()
 
-        return self.global_contents.wait_and_get_element(
+        output = self.global_contents.wait_for_element_visibility(
             self.driver,
             ios_elements.course_discovery_textview
         )
+        if output:
+            return self.global_contents.wait_and_get_element(
+                self.driver,
+                ios_elements.course_discovery_textview
+            )
+        else:
+            self.global_contents.wait_for_element_visibility(
+                self.driver,
+                ios_elements.course_discovery_textview
+            )
+
+            return self.global_contents.wait_and_get_element(
+                self.driver,
+                ios_elements.course_discovery_textview
+            )

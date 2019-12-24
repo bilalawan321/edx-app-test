@@ -57,12 +57,11 @@ class TestIosMyCoursesList:
                     Course Name, Course Start/End date
             Verify that "Looking for a new challenge?" label and "Find a Course" button are available
         """
-
         ios_main_dashboard_page = IosMainDashboard(set_capabilities, setup_logging)
         ios_my_courses_list = IosMyCoursesList(set_capabilities, setup_logging)
 
         assert ios_main_dashboard_page.get_profile_icon().text == strings.MAIN_DASHBOARD_PROFILE
-        assert ios_main_dashboard_page.get_title_textview_portrait_mode().text == strings.MAIN_DASHBOARD_SCREEN_TITLE
+        assert ios_main_dashboard_page.get_title_textview_portrait_mode().text == strings.BLANK_FIELD
         assert ios_main_dashboard_page.get_drawer_icon().text == strings.MAIN_DASHBOARD_NAVIGATION_MENU_NAME
         assert ios_main_dashboard_page.get_courses_tab().text == strings.SELECTED_BY_DEFAULT
         assert ios_main_dashboard_page.get_discovery_tab().text == strings.MAIN_DASHBOARD_DISCOVERY_TAB
@@ -94,10 +93,10 @@ class TestIosMyCoursesList:
 
         if ios_my_courses_list.get_my_courses_list_row():
             course_name = ios_my_courses_list.get_my_courses_list_row().text
-            assert ios_my_courses_list.load_course_details_screen().text == course_name
-            set_capabilities.back()
+            # assert ios_my_courses_list.load_course_details_screen().text == course_name
+            # set_capabilities.back()
 
-        assert ios_my_courses_list.load_discovery_screen().text == strings.DISCOVER_SUBJECTS_SECTION_TITLE
+        assert ios_my_courses_list.load_discovery_screen().text == strings.COURSES_DISCOVERY_BROWSE_BY_SUBJECT_LABEL
         setup_logging.info(set_capabilities.context)
         assert ios_main_dashboard_page.load_courses_tab().text == strings.SELECTED_BY_DEFAULT
 
@@ -126,7 +125,7 @@ class TestIosMyCoursesList:
         global_contents.turn_orientation(set_capabilities, global_contents.LANDSCAPE_ORIENTATION)
 
         assert ios_main_dashboard_page.get_profile_icon().text == strings.MAIN_DASHBOARD_PROFILE
-        assert ios_main_dashboard_page.get_title_textview_landscape_mode().text == strings.MAIN_DASHBOARD_SCREEN_TITLE
+        assert ios_main_dashboard_page.get_title_textview_landscape_mode().text == strings.BLANK_FIELD
         assert ios_main_dashboard_page.get_drawer_icon().text == strings.MAIN_DASHBOARD_NAVIGATION_MENU_NAME
         assert ios_main_dashboard_page.get_courses_tab().text == strings.SELECTED_BY_DEFAULT
         assert ios_main_dashboard_page.get_discovery_tab().text == strings.MAIN_DASHBOARD_DISCOVERY_TAB
@@ -135,8 +134,8 @@ class TestIosMyCoursesList:
             assert ios_my_courses_list.get_my_course_name()
             assert ios_my_courses_list.get_my_course_details()
             course_name = ios_my_courses_list.get_my_courses_list_row().text
-            assert ios_my_courses_list.load_course_details_screen().text == course_name
-            set_capabilities.back()
+            # assert ios_my_courses_list.load_course_details_screen().text == course_name
+            # set_capabilities.back()
         else:
             setup_logging.info('No course enrolled by this user.')
 
