@@ -74,8 +74,8 @@ class TestIosMainDashboard:
         assert ios_main_dashboard_page.load_profile_screen().text == strings.BLANK_FIELD
         set_capabilities.back()
 
-        # assert ios_main_dashboard_page.load_account_screen().text == strings.ACCOUNT_SCREEN_TITLE
-        # set_capabilities.back()
+        assert ios_main_dashboard_page.load_account_screen().text == strings.ACCOUNT_SCREEN_TITLE
+        set_capabilities.back()
 
     def test_logout_smoke(self, set_capabilities, setup_logging):
         """
@@ -129,8 +129,8 @@ class TestIosMainDashboard:
         assert ios_main_dashboard_page.get_discovery_tab().text == strings.MAIN_DASHBOARD_DISCOVERY_TAB
         assert ios_main_dashboard_page.load_profile_screen().text == strings.BLANK_FIELD
         set_capabilities.back()
-        # assert ios_main_dashboard_page.load_account_screen().text == strings.ACCOUNT_SCREEN_TITLE
-        # set_capabilities.back()
+        assert ios_main_dashboard_page.load_account_screen().text == strings.ACCOUNT_SCREEN_TITLE
+        set_capabilities.back()
 
         assert ios_main_dashboard_page.get_account_options()[3].text == strings.ACCOUNT_LOGOUT
         assert ios_main_dashboard_page.log_out().text == strings.LOGIN
