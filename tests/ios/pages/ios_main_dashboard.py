@@ -106,8 +106,8 @@ class IosMainDashboard(IosBasePage):
 
         return self.global_contents.get_all_views_on_ios_screen(
             self.driver,
-            ios_elements.all_otherviews
-        )[self.global_contents.fifteenth_existence]
+            ios_elements.all_textviews
+        )[self.global_contents.first_existence]
 
     def load_discovery_tab(self):
         """
