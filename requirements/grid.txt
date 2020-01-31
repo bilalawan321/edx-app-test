@@ -1,0 +1,12 @@
+selenium
+PyYAML
+Appium-Python-Client
+pytest
+pytest-html
+Paver
+pep8
+pylint
+pytest-rerunfailures
+requests
+filelock
+pytest-xdist

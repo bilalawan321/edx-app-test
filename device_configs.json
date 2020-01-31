@@ -1,0 +1,18 @@
+{
+    "Android": {
+        "systemPorts": [
+            "7100"
+        ], 
+        "deviceUDIDs": [
+            "emulator-5554"
+        ]
+    }, 
+    "iOS": {
+        "wdaLocalPorts": [
+            "8100"
+        ], 
+        "deviceUDIDs": [
+            "17794986-0F98-4D96-A861-96CF894BD29B"
+        ]
+    }
+}
