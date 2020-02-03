@@ -16,7 +16,7 @@ class TestAndroidLogin:
     Login screen's Test Case
     """
 
-    def test_start_login_smoke(self, set_capabilities, setup_logging):
+    def test_start_login_smoke(self, android_driver, setup_logging):
         """
         Scenario:
             Verify Login screen is loaded successfully
@@ -24,15 +24,15 @@ class TestAndroidLogin:
 
         setup_logging.info('-- Starting {} Test Case'.format(TestAndroidLogin.__name__))
 
-        android_new_landing_page = AndroidNewLanding(set_capabilities, setup_logging)
-        android_login_page = AndroidLogin(set_capabilities, setup_logging)
+        android_new_landing_page = AndroidNewLanding(android_driver, setup_logging)
+        android_login_page = AndroidLogin(android_driver, setup_logging)
 
         assert android_new_landing_page.load_login_screen() == Globals.LOGIN_ACTIVITY_NAME
         assert android_login_page.on_screen() == Globals.LOGIN_ACTIVITY_NAME
 
         setup_logging.info('Login screen successfully loaded')
 
-    def test_ui_elements(self, set_capabilities, setup_logging):
+    def test_ui_elements(self, android_driver, setup_logging):
         """
         Scenarios:
         Verify following contents are visible on screen 
@@ -44,7 +44,7 @@ class TestAndroidLogin:
         Verify all screen contents have their default values
         """
 
-        android_login_page = AndroidLogin(set_capabilities, setup_logging)
+        android_login_page = AndroidLogin(android_driver, setup_logging)
 
         assert android_login_page.get_title_textview().text == strings.LOGIN
         assert android_login_page.get_username_editfield().text == strings.LOGIN_USER_NAME_WATER_MARK_ANDROID
@@ -58,7 +58,7 @@ class TestAndroidLogin:
         assert android_login_page.get_agreement_textview().text == strings.LOGIN_ANDROID_AGREEMENT
 
     @pytest.mark.skip(reason="No id could be assigned to part of string, will figure it out later")
-    def test_back_and_forth_smoke(self, set_capabilities, setup_logging):
+    def test_back_and_forth_smoke(self, android_driver, setup_logging):
         """
         Scenarios:
                 Verify tapping back icon from 'Sign In' screen navigate user
@@ -68,14 +68,14 @@ class TestAndroidLogin:
                 Verify that user is able to load Privacy screen and get back to Login Screen
         """
 
-        android_login_page = AndroidLogin(set_capabilities, setup_logging)
+        android_login_page = AndroidLogin(android_driver, setup_logging)
 
         assert android_login_page.back_and_forth_login()
         assert android_login_page.load_eula_screen()
         assert android_login_page.load_terms_screen()
         assert android_login_page.load_privacy_screen()
 
-    def test_forgot_password_alert(self, set_capabilities, setup_logging):
+    def test_forgot_password_alert(self, android_driver, setup_logging):
         """
         Scenarios:
                 Verify tapping 'Forgot your password?' will  load 'Reset Password' alert
@@ -84,7 +84,7 @@ class TestAndroidLogin:
                 Verify tapping 'Cancel' will close 'Reset Password' alert
         """
 
-        android_login_page = AndroidLogin(set_capabilities, setup_logging)
+        android_login_page = AndroidLogin(android_driver, setup_logging)
         android_login_page.get_forgot_password_alert()
 
         assert android_login_page.get_forgot_password_alert_title().text == strings.LOGIN_RESET_PASSWORD_ALERT_TITLE
@@ -95,13 +95,13 @@ class TestAndroidLogin:
         assert forgot_password_alert_cancel_button == strings.LOGIN_RESET_PASSWORD_ALERT_CANCEL_ANDROID
         assert android_login_page.close_forgot_password_alert()
 
-    def test_login_smoke(self, set_capabilities, setup_logging):
+    def test_login_smoke(self, android_driver, setup_logging):
         """
         Verifies that user can login with valid Username and Password
         """
 
         global_contents = Globals(setup_logging)
-        android_login_page = AndroidLogin(set_capabilities, setup_logging)
+        android_login_page = AndroidLogin(android_driver, setup_logging)
 
         assert android_login_page.login(
             global_contents.login_wrong_user_name,

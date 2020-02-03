@@ -17,7 +17,7 @@ class TestIosMyCoursesList:
     My Courses List's Test Case
     """
 
-    def test_start_my_courses_list_smoke(self, set_capabilities, setup_logging):
+    def test_start_my_courses_list_smoke(self, ios_driver, setup_logging):
         """
         Scenarios:
             Verify that from Main Dashboard tapping Courses tab will load My Courses
@@ -28,10 +28,10 @@ class TestIosMyCoursesList:
 
         global_contents = Globals(setup_logging)
         global_contents.is_first_time = False
-        ios_new_landing_page = IosNewLanding(set_capabilities, setup_logging)
-        ios_login_page = IosLogin(set_capabilities, setup_logging)
-        ios_whats_new_page = IosWhatsNew(set_capabilities, setup_logging)
-        ios_main_dashboard_page = IosMainDashboard(set_capabilities, setup_logging)
+        ios_new_landing_page = IosNewLanding(ios_driver, setup_logging)
+        ios_login_page = IosLogin(ios_driver, setup_logging)
+        ios_whats_new_page = IosWhatsNew(ios_driver, setup_logging)
+        ios_main_dashboard_page = IosMainDashboard(ios_driver, setup_logging)
 
         assert ios_new_landing_page.get_welcome_message().text == strings.NEW_LANDING_MESSAGE_IOS
         assert ios_new_landing_page.load_login_screen().text == strings.LOGIN
@@ -49,7 +49,7 @@ class TestIosMyCoursesList:
 
         assert ios_main_dashboard_page.load_courses_tab().text == strings.SELECTED_BY_DEFAULT
 
-    def test_validate_ui_elements_smoke(self, set_capabilities, setup_logging):
+    def test_validate_ui_elements_smoke(self, ios_driver, setup_logging):
         """
         Scenarios:
             Verify following contents on Header, Profile icon, "Courses" title, Account Icon
@@ -58,8 +58,8 @@ class TestIosMyCoursesList:
             Verify that "Looking for a new challenge?" label and "Find a Course" button are available
         """
 
-        ios_main_dashboard_page = IosMainDashboard(set_capabilities, setup_logging)
-        ios_my_courses_list = IosMyCoursesList(set_capabilities, setup_logging)
+        ios_main_dashboard_page = IosMainDashboard(ios_driver, setup_logging)
+        ios_my_courses_list = IosMyCoursesList(ios_driver, setup_logging)
 
         assert ios_main_dashboard_page.get_profile_icon().text == strings.MAIN_DASHBOARD_PROFILE
         assert ios_main_dashboard_page.get_title_textview_portrait_mode().text == strings.MAIN_DASHBOARD_SCREEN_TITLE
@@ -78,7 +78,7 @@ class TestIosMyCoursesList:
         assert ios_my_courses_list.get_find_courses_message().text == strings.MY_COURSES_LIST_FIND_COURSES_MESSAGE
         assert ios_my_courses_list.get_find_course_button().text == strings.MY_COURSES_LIST_FIND_COURSES_BUTTON_IOS
 
-    def test_load_course_details_smoke(self, set_capabilities, setup_logging):
+    def test_load_course_details_smoke(self, ios_driver, setup_logging):
         """
         Scenarios:
             Verify that tapping any course should load specific Course Dashboard screen
@@ -89,19 +89,19 @@ class TestIosMyCoursesList:
 
         """
 
-        ios_main_dashboard_page = IosMainDashboard(set_capabilities, setup_logging)
-        ios_my_courses_list = IosMyCoursesList(set_capabilities, setup_logging)
+        ios_main_dashboard_page = IosMainDashboard(ios_driver, setup_logging)
+        ios_my_courses_list = IosMyCoursesList(ios_driver, setup_logging)
 
         if ios_my_courses_list.get_my_courses_list_row():
             course_name = ios_my_courses_list.get_my_courses_list_row().text
             assert ios_my_courses_list.load_course_details_screen().text == course_name
-            set_capabilities.back()
+            ios_driver.back()
 
         assert ios_my_courses_list.load_discovery_screen().text == strings.DISCOVER_SUBJECTS_SECTION_TITLE
-        setup_logging.info(set_capabilities.context)
+        setup_logging.info(ios_driver.context)
         assert ios_main_dashboard_page.load_courses_tab().text == strings.SELECTED_BY_DEFAULT
 
-    def test_landscape_smoke(self, set_capabilities, setup_logging):
+    def test_landscape_smoke(self, ios_driver, setup_logging):
         """
         Scenarios:
                 Change device orientation to Landscape mode
@@ -120,10 +120,10 @@ class TestIosMyCoursesList:
         """
 
         global_contents = Globals(setup_logging)
-        ios_main_dashboard_page = IosMainDashboard(set_capabilities, setup_logging)
-        ios_my_courses_list = IosMyCoursesList(set_capabilities, setup_logging)
+        ios_main_dashboard_page = IosMainDashboard(ios_driver, setup_logging)
+        ios_my_courses_list = IosMyCoursesList(ios_driver, setup_logging)
 
-        global_contents.turn_orientation(set_capabilities, global_contents.LANDSCAPE_ORIENTATION)
+        global_contents.turn_orientation(ios_driver, global_contents.LANDSCAPE_ORIENTATION)
 
         assert ios_main_dashboard_page.get_profile_icon().text == strings.MAIN_DASHBOARD_PROFILE
         assert ios_main_dashboard_page.get_title_textview_landscape_mode().text == strings.MAIN_DASHBOARD_SCREEN_TITLE
@@ -136,7 +136,7 @@ class TestIosMyCoursesList:
             assert ios_my_courses_list.get_my_course_details()
             course_name = ios_my_courses_list.get_my_courses_list_row().text
             assert ios_my_courses_list.load_course_details_screen().text == course_name
-            set_capabilities.back()
+            ios_driver.back()
         else:
             setup_logging.info('No course enrolled by this user.')
 
@@ -144,8 +144,8 @@ class TestIosMyCoursesList:
         assert ios_my_courses_list.get_find_course_button().text == strings.MY_COURSES_LIST_FIND_COURSES_BUTTON_IOS
 
         ios_my_courses_list.load_discovery_screen()
-        setup_logging.info(set_capabilities.context)
+        setup_logging.info(ios_driver.context)
         assert ios_main_dashboard_page.load_courses_tab().text == strings.SELECTED_BY_DEFAULT
-        global_contents.turn_orientation(set_capabilities, global_contents.PORTRAIT_ORIENTATION)
+        global_contents.turn_orientation(ios_driver, global_contents.PORTRAIT_ORIENTATION)
 
         setup_logging.info('-- Ending Test Case')

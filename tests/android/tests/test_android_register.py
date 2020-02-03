@@ -16,7 +16,7 @@ class TestAndroidRegister:
         Register Screen Test Case
     """
 
-    def test_start_register_smoke(self, set_capabilities, setup_logging):
+    def test_start_register_smoke(self, android_driver, setup_logging):
         """
         Scenario:
             Verify Register screen is loaded successfully
@@ -24,13 +24,13 @@ class TestAndroidRegister:
 
         setup_logging.info('-- Starting {} Test Case'.format(TestAndroidRegister.__name__))
 
-        android_new_landing_page = AndroidNewLanding(set_capabilities, setup_logging)
-        android_register_page = AndroidRegister(set_capabilities, setup_logging)
+        android_new_landing_page = AndroidNewLanding(android_driver, setup_logging)
+        android_register_page = AndroidRegister(android_driver, setup_logging)
 
         android_new_landing_page.load_register_screen()
         assert android_register_page.on_screen() == Globals.REGISTER_ACTIVITY_NAME
 
-    def test_ui_elements_smoke(self, set_capabilities, setup_logging):
+    def test_ui_elements_smoke(self, android_driver, setup_logging):
         """
         Scenarios:
 
@@ -50,7 +50,7 @@ class TestAndroidRegister:
         Verify that user should be able to scroll screen to see all contents
         """
 
-        android_register_page = AndroidRegister(set_capabilities, setup_logging)
+        android_register_page = AndroidRegister(android_driver, setup_logging)
 
         assert android_register_page.get_register_divider_textview().text == strings.REGISTER_SCREEN_REGISTER_WITH
         assert android_register_page.get_facebook_textview().text == strings.FACEBOOK_OPTION
@@ -82,7 +82,7 @@ class TestAndroidRegister:
         assert android_register_page.get_create_my_account_textview().text == strings.REGISTER_CREATE_MY_ACCOUNT
         assert android_register_page.get_agreement_textview().text == strings.REGISTER_AGREEMENT_ANDROID
 
-    def test_show_hide_optional_fields_smoke(self, set_capabilities, setup_logging):
+    def test_show_hide_optional_fields_smoke(self, android_driver, setup_logging):
         """
         Scenarios:
 
@@ -95,7 +95,7 @@ class TestAndroidRegister:
         Verify all optional contents/elements have default values
         """
 
-        android_register_page = AndroidRegister(set_capabilities, setup_logging)
+        android_register_page = AndroidRegister(android_driver, setup_logging)
 
         assert android_register_page.show_hide_optional_fields().text == strings.REGISTER_HIDE_OPTIONAL_FIELDS_OPTION
 
@@ -106,7 +106,7 @@ class TestAndroidRegister:
 
         assert android_register_page.show_hide_optional_fields().text == strings.REGISTER_SHOW_OPTIONAL_FIELDS_OPTION
 
-    def test_back_and_forth_smoke(self, set_capabilities, setup_logging):
+    def test_back_and_forth_smoke(self, android_driver, setup_logging):
         """
         Scenarios:
                 Verify tapping "Back" icon will load New Logistration/New Landing screen
@@ -119,14 +119,14 @@ class TestAndroidRegister:
                 Verify that user is able to load Privacy screen and get back to Register Screen
         """
 
-        android_register_page = AndroidRegister(set_capabilities, setup_logging)
+        android_register_page = AndroidRegister(android_driver, setup_logging)
 
         assert android_register_page.back_and_forth_register()
         assert android_register_page.load_eula_screen()
         assert android_register_page.load_terms_screen()
         assert android_register_page.load_privacy_screen()
 
-    def test_required_and_optional_fields_smoke(self, set_capabilities, setup_logging):
+    def test_required_and_optional_fields_smoke(self, android_driver, setup_logging):
         """
         Scenarios:
 
@@ -138,7 +138,7 @@ class TestAndroidRegister:
             "Tell us why you're interested in edX" label with edit - field below
         """
 
-        android_register_page = AndroidRegister(set_capabilities, setup_logging)
+        android_register_page = AndroidRegister(android_driver, setup_logging)
         assert android_register_page.validate_required_optional_fields()
         assert android_register_page.get_email_validation_textview().text == strings.REGISTER_EMAIL_BLANK_ERROR
         assert android_register_page.get_full_name_validation_textview().text == strings.REGISTER_FULL_NAME_BLANK_ERROR
@@ -146,14 +146,14 @@ class TestAndroidRegister:
         assert android_register_page.get_password_validation_textview().text == strings.REGISTER_PASSWORD_BLANK_ERROR
         assert android_register_page.get_country_validation_textview().text == strings.REGISTER_COUNTRY_BLANK_ERROR
 
-    def test_register_smoke(self, set_capabilities, setup_logging):
+    def test_register_smoke(self, android_driver, setup_logging):
         """
         Verify that tapping "Create your account" button after filling all required input(valid) types,
             will validate all inputs and load "Whats new feature screen" with specific user logged in
         Verify that user should be able to log out and re-login with new created account credentials
         """
 
-        android_register_page = AndroidRegister(set_capabilities, setup_logging)
+        android_register_page = AndroidRegister(android_driver, setup_logging)
         global_contents = Globals(setup_logging)
 
         user_name = global_contents.generate_random_credentials(4)
@@ -177,24 +177,24 @@ class TestAndroidRegister:
                                                          )
 
         global_contents.wait_for_android_activity_to_load(
-            set_capabilities,
+            android_driver,
             global_contents.REGISTER_ACTIVITY_NAME
         )
 
         assert register_output == Globals.WHATS_NEW_ACTIVITY_NAME
 
-        android_whats_new_page = AndroidWhatsNew(set_capabilities, setup_logging)
+        android_whats_new_page = AndroidWhatsNew(android_driver, setup_logging)
         android_whats_new_page.navigate_features()
         assert android_whats_new_page.exit_features() == Globals.MAIN_DASHBOARD_ACTIVITY_NAME
 
-        android_main_dashboard_page = AndroidMainDashboard(set_capabilities, setup_logging)
+        android_main_dashboard_page = AndroidMainDashboard(android_driver, setup_logging)
         assert android_main_dashboard_page.get_logout_account_option().text == strings.ACCOUNT_LOGOUT
         assert android_main_dashboard_page.log_out() == Globals.DISCOVERY_LAUNCH_ACTIVITY_NAME
 
-        android_new_landing_page = AndroidNewLanding(set_capabilities, setup_logging)
+        android_new_landing_page = AndroidNewLanding(android_driver, setup_logging)
         assert android_new_landing_page.load_login_screen() == Globals.LOGIN_ACTIVITY_NAME
 
-        android_login_page = AndroidLogin(set_capabilities, setup_logging)
+        android_login_page = AndroidLogin(android_driver, setup_logging)
 
         login_output = android_login_page.login(
             user_name,

@@ -18,7 +18,7 @@ class TestAndroidMyCoursesList:
     My Courses List's Test Case
     """
 
-    def test_start_my_courses_list_smoke(self, set_capabilities, setup_logging):
+    def test_start_my_courses_list_smoke(self, android_driver, setup_logging):
         """
         Scenarios:
             Verify that from Main Dashboard tapping Courses tab will load My Courses
@@ -28,10 +28,10 @@ class TestAndroidMyCoursesList:
         setup_logging.info('-- Starting {} Test Case'.format(TestAndroidMyCoursesList.__name__))
 
         global_contents = Globals(setup_logging)
-        android_new_landing_page = AndroidNewLanding(set_capabilities, setup_logging)
-        android_login_page = AndroidLogin(set_capabilities, setup_logging)
-        android_whats_new_page = AndroidWhatsNew(set_capabilities, setup_logging)
-        android_main_dashboard_page = AndroidMainDashboard(set_capabilities, setup_logging)
+        android_new_landing_page = AndroidNewLanding(android_driver, setup_logging)
+        android_login_page = AndroidLogin(android_driver, setup_logging)
+        android_whats_new_page = AndroidWhatsNew(android_driver, setup_logging)
+        android_main_dashboard_page = AndroidMainDashboard(android_driver, setup_logging)
 
         assert android_new_landing_page.on_screen() == global_contents.DISCOVERY_LAUNCH_ACTIVITY_NAME
         assert android_new_landing_page.load_login_screen() == Globals.LOGIN_ACTIVITY_NAME
@@ -46,7 +46,7 @@ class TestAndroidMyCoursesList:
         assert android_whats_new_page.exit_features() == Globals.MAIN_DASHBOARD_ACTIVITY_NAME
         assert android_main_dashboard_page.load_courses_tab()
 
-    def test_validate_ui_elements_smoke(self, set_capabilities, setup_logging):
+    def test_validate_ui_elements_smoke(self, android_driver, setup_logging):
         """
         Scenarios:
             Verify that from Main Dashboard  tapping Courses tab will load My Courses
@@ -67,8 +67,8 @@ class TestAndroidMyCoursesList:
 
         """
 
-        android_main_dashboard_page = AndroidMainDashboard(set_capabilities, setup_logging)
-        android_my_courses_list_page = AndroidMyCoursesList(set_capabilities, setup_logging)
+        android_main_dashboard_page = AndroidMainDashboard(android_driver, setup_logging)
+        android_my_courses_list_page = AndroidMyCoursesList(android_driver, setup_logging)
 
         assert android_main_dashboard_page.get_profile_icon().text == strings.BLANK_FIELD
         assert android_main_dashboard_page.get_title_textview().text == strings.MAIN_DASHBOARD_SCREEN_TITLE
@@ -88,7 +88,7 @@ class TestAndroidMyCoursesList:
         find_courses_button = android_my_courses_list_page.get_find_course_button().text
         assert find_courses_button == strings.MY_COURSES_LIST_FIND_COURSES_BUTTON_ANDROID
 
-    def test_load_course_details_smoke(self, set_capabilities, setup_logging):
+    def test_load_course_details_smoke(self, android_driver, setup_logging):
         """
         Scenarios:
             Verify that tapping any course should load specific Course Dashboard screen
@@ -99,23 +99,23 @@ class TestAndroidMyCoursesList:
 
         """
 
-        android_main_dashboard_page = AndroidMainDashboard(set_capabilities, setup_logging)
-        android_my_courses_list_page = AndroidMyCoursesList(set_capabilities, setup_logging)
+        android_main_dashboard_page = AndroidMainDashboard(android_driver, setup_logging)
+        android_my_courses_list_page = AndroidMyCoursesList(android_driver, setup_logging)
         global_contents = Globals(setup_logging)
 
         if android_my_courses_list_page.get_my_courses_list_row():
             course_dashboard_screen = android_my_courses_list_page.load_course_details_screen()
             assert course_dashboard_screen == global_contents.COURSE_DASHBOARD_ACTIVITY_NAME
-            set_capabilities.back()
+            android_driver.back()
             assert android_main_dashboard_page.on_screen() == global_contents.MAIN_DASHBOARD_ACTIVITY_NAME
-            global_contents.swipe_screen(set_capabilities)
+            global_contents.swipe_screen(android_driver)
 
         course_discovery_screen = android_my_courses_list_page.load_discovery_screen()
         assert course_discovery_screen == global_contents.WEB_VIEW_FIND_COURSES_ACTIVITY_NAME
-        set_capabilities.back()
+        android_driver.back()
         assert android_main_dashboard_page.on_screen() == global_contents.MAIN_DASHBOARD_ACTIVITY_NAME
 
-    def test_landscape_smoke(self, set_capabilities, setup_logging):
+    def test_landscape_smoke(self, android_driver, setup_logging):
         """
         Scenarios:
             Change device orientation to Landscape mode
@@ -143,11 +143,11 @@ class TestAndroidMyCoursesList:
             Verity that from Course Dashboard tapping back should load My Courses List screen
         """
 
-        android_main_dashboard_page = AndroidMainDashboard(set_capabilities, setup_logging)
-        android_my_courses_list_page = AndroidMyCoursesList(set_capabilities, setup_logging)
+        android_main_dashboard_page = AndroidMainDashboard(android_driver, setup_logging)
+        android_my_courses_list_page = AndroidMyCoursesList(android_driver, setup_logging)
         global_contents = Globals(setup_logging)
 
-        global_contents.turn_orientation(set_capabilities, global_contents.LANDSCAPE_ORIENTATION)
+        global_contents.turn_orientation(android_driver, global_contents.LANDSCAPE_ORIENTATION)
 
         assert android_main_dashboard_page.get_profile_icon().text == strings.BLANK_FIELD
         assert android_main_dashboard_page.get_title_textview().text == strings.MAIN_DASHBOARD_SCREEN_TITLE
@@ -160,9 +160,9 @@ class TestAndroidMyCoursesList:
             android_my_courses_list_page.get_contents_from_list()
             course_dashboard_screen = android_my_courses_list_page.load_course_details_screen()
             assert course_dashboard_screen == global_contents.COURSE_DASHBOARD_ACTIVITY_NAME
-            set_capabilities.back()
+            android_driver.back()
             assert android_main_dashboard_page.on_screen() == global_contents.MAIN_DASHBOARD_ACTIVITY_NAME
-            global_contents.swipe_screen(set_capabilities)
+            global_contents.swipe_screen(android_driver)
 
         else:
             setup_logging.info('No course enrolled by this user.')
@@ -174,9 +174,9 @@ class TestAndroidMyCoursesList:
 
         course_discovery_screen = android_my_courses_list_page.load_discovery_screen()
         assert course_discovery_screen == global_contents.WEB_VIEW_FIND_COURSES_ACTIVITY_NAME
-        set_capabilities.back()
+        android_driver.back()
         assert android_main_dashboard_page.on_screen() == global_contents.MAIN_DASHBOARD_ACTIVITY_NAME
 
-        global_contents.turn_orientation(set_capabilities, global_contents.PORTRAIT_ORIENTATION)
+        global_contents.turn_orientation(android_driver, global_contents.PORTRAIT_ORIENTATION)
 
         setup_logging.info('-- Ending {} Test Case'.format(TestAndroidMyCoursesList.__name__))

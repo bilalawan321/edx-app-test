@@ -20,7 +20,7 @@ class TestAndroidedXApp:
     New Landing screen's Test Case
     """
 
-    def test_start_new_landing_smoke(self, set_capabilities, setup_logging):
+    def test_start_new_landing_smoke(self, android_driver, setup_logging):
         """
         Scenarios:
             Verify New Landing screen is loaded successfully
@@ -28,18 +28,18 @@ class TestAndroidedXApp:
 
         setup_logging.info('-- Starting New Landing Test Case --')
         global_contents = Globals(setup_logging)
-        android_new_landing = AndroidNewLanding(set_capabilities, setup_logging)
+        android_new_landing = AndroidNewLanding(android_driver, setup_logging)
 
         assert android_new_landing.on_screen() == global_contents.DISCOVERY_LAUNCH_ACTIVITY_NAME
 
-    def test_new_landing_ui_elements_smoke(self, set_capabilities, setup_logging):
+    def test_new_landing_ui_elements_smoke(self, android_driver, setup_logging):
         """
         Verify following contents are visible on screen,
             "edX logo", "Message" text-field, "Search Courses" edit-field, "Register" button, "Sign In" button
         Verify all contents have their default values
         """
 
-        android_new_landing = AndroidNewLanding(set_capabilities, setup_logging)
+        android_new_landing = AndroidNewLanding(android_driver, setup_logging)
 
         assert android_new_landing.get_edx_logo().text == strings.BLANK_FIELD
         android_new_landing.get_welcome_message()
@@ -49,20 +49,20 @@ class TestAndroidedXApp:
         assert android_new_landing.get_signin_button().text == strings.NEW_LANDING_LOG_IN
         assert android_new_landing.get_register_button().text == strings.NEW_LANDING_CREATE_YOUR_ACCOUNT
 
-    def test_new_landing_search_courses_smoke(self, set_capabilities, setup_logging):
+    def test_new_landing_search_courses_smoke(self, android_driver, setup_logging):
         """
         Verifies that user can search courses, and back to New Landing screen
         """
 
         global_contents = Globals(setup_logging)
-        android_new_landing = AndroidNewLanding(set_capabilities, setup_logging)
+        android_new_landing = AndroidNewLanding(android_driver, setup_logging)
 
         search_courses_screen = android_new_landing.search_courses(global_contents.new_landing_search_courses)
         assert search_courses_screen == global_contents.WITHOUT_LOGIN_DISCOVERY_ACTIVITY_NAME
-        set_capabilities.back()
+        android_driver.back()
         assert android_new_landing.on_screen() == global_contents.DISCOVERY_LAUNCH_ACTIVITY_NAME
 
-    def test_new_landing_back_and_forth_smoke(self, set_capabilities, setup_logging):
+    def test_new_landing_back_and_forth_smoke(self, android_driver, setup_logging):
         """
         Scenarios:
                 Verify tapping "Login" will load "Sign In" screen
@@ -73,14 +73,14 @@ class TestAndroidedXApp:
                     navigate user back to 'New Landing' screen
         """
 
-        android_new_landing = AndroidNewLanding(set_capabilities, setup_logging)
+        android_new_landing = AndroidNewLanding(android_driver, setup_logging)
 
         assert android_new_landing.back_and_forth_login()
         assert android_new_landing.back_and_forth_register()
 
         setup_logging.info('-- Ending New landing Test Case --')
 
-    def test_start_login_smoke(self, set_capabilities, setup_logging):
+    def test_start_login_smoke(self, android_driver, setup_logging):
         """
         Scenario:
             Verify Login screen is loaded successfully
@@ -88,15 +88,15 @@ class TestAndroidedXApp:
 
         setup_logging.info('-- Starting Login Test Case --')
 
-        android_new_landing_page = AndroidNewLanding(set_capabilities, setup_logging)
-        android_login_page = AndroidLogin(set_capabilities, setup_logging)
+        android_new_landing_page = AndroidNewLanding(android_driver, setup_logging)
+        android_login_page = AndroidLogin(android_driver, setup_logging)
 
         assert android_new_landing_page.load_login_screen() == Globals.LOGIN_ACTIVITY_NAME
         assert android_login_page.on_screen() == Globals.LOGIN_ACTIVITY_NAME
 
         setup_logging.info('Login screen successfully loaded')
 
-    def test_login_ui_elements(self, set_capabilities, setup_logging):
+    def test_login_ui_elements(self, android_driver, setup_logging):
         """
         Scenarios:
         Verify following contents are visible on screen 
@@ -108,7 +108,7 @@ class TestAndroidedXApp:
         Verify all screen contents have their default values
         """
 
-        android_login_page = AndroidLogin(set_capabilities, setup_logging)
+        android_login_page = AndroidLogin(android_driver, setup_logging)
 
         assert android_login_page.get_title_textview().text == strings.LOGIN
         assert android_login_page.get_username_editfield().text == strings.LOGIN_USER_NAME_WATER_MARK_ANDROID
@@ -121,7 +121,7 @@ class TestAndroidedXApp:
         assert android_login_page.get_google_textview().text == strings.GOOGLE_OPTION
         assert android_login_page.get_agreement_textview().text == strings.LOGIN_ANDROID_AGREEMENT
 
-    def test_login_back_and_forth_smoke(self, set_capabilities, setup_logging):
+    def test_login_back_and_forth_smoke(self, android_driver, setup_logging):
         """
         Scenarios:
                 Verify tapping back icon from 'Sign In' screen navigate user
@@ -131,11 +131,11 @@ class TestAndroidedXApp:
                 Verify that user is able to load Privacy screen and get back to Login Screen
         """
 
-        android_login_page = AndroidLogin(set_capabilities, setup_logging)
+        android_login_page = AndroidLogin(android_driver, setup_logging)
 
         assert android_login_page.back_and_forth_login()
 
-    def test_login_forgot_password_alert(self, set_capabilities, setup_logging):
+    def test_login_forgot_password_alert(self, android_driver, setup_logging):
         """
         Scenarios:
                 Verify tapping 'Forgot your password?' will  load 'Reset Password' alert
@@ -144,7 +144,7 @@ class TestAndroidedXApp:
                 Verify tapping 'Cancel' will close 'Reset Password' alert
         """
 
-        android_login_page = AndroidLogin(set_capabilities, setup_logging)
+        android_login_page = AndroidLogin(android_driver, setup_logging)
         android_login_page.get_forgot_password_alert()
 
         assert android_login_page.get_forgot_password_alert_title().text == strings.LOGIN_RESET_PASSWORD_ALERT_TITLE
@@ -156,13 +156,13 @@ class TestAndroidedXApp:
         assert forgot_password_alert_cancel_button == strings.LOGIN_RESET_PASSWORD_ALERT_CANCEL_ANDROID
         assert android_login_page.close_forgot_password_alert()
 
-    def test_login_smoke(self, set_capabilities, setup_logging):
+    def test_login_smoke(self, android_driver, setup_logging):
         """
         Verifies that user can login with valid Username and Password
         """
 
         global_contents = Globals(setup_logging)
-        android_login_page = AndroidLogin(set_capabilities, setup_logging)
+        android_login_page = AndroidLogin(android_driver, setup_logging)
 
         assert android_login_page.login(
             global_contents.login_wrong_user_name,
@@ -177,17 +177,17 @@ class TestAndroidedXApp:
 
         setup_logging.info('-- Ending Login Test Case --')
 
-    def test_start_whats_new_smoke(self, setup_logging, set_capabilities):
+    def test_start_whats_new_smoke(self, setup_logging, android_driver):
         """
         Scenarios:
             Verify Whats New screen is loaded successfully
         """
-        android_whats_new_page = AndroidWhatsNew(set_capabilities, setup_logging)
+        android_whats_new_page = AndroidWhatsNew(android_driver, setup_logging)
         setup_logging.info('-- Starting Whats New Test Case')
 
         assert android_whats_new_page.on_screen() == Globals.WHATS_NEW_ACTIVITY_NAME
 
-    def test_whats_new_validate_ui_elements_smoke(self, set_capabilities, setup_logging):
+    def test_whats_new_validate_ui_elements_smoke(self, android_driver, setup_logging):
         """
         Scenarios:
                 Verify following contents are visible on screen 
@@ -196,7 +196,7 @@ class TestAndroidedXApp:
                 Verify all screen contents have their default values
         """
 
-        android_whats_new_page = AndroidWhatsNew(set_capabilities, setup_logging)
+        android_whats_new_page = AndroidWhatsNew(android_driver, setup_logging)
 
         assert android_whats_new_page.get_title_textview()
         assert android_whats_new_page.get_cross_icon()
@@ -204,30 +204,30 @@ class TestAndroidedXApp:
         assert android_whats_new_page.get_feature_title_textview()
         assert android_whats_new_page.get_feature_details()
 
-    def test_whats_new_navigate_features_smoke(self, set_capabilities, setup_logging):
+    def test_whats_new_navigate_features_smoke(self, android_driver, setup_logging):
         """
         Verifies that user can navigate between features
         """
 
-        android_whats_new_page = AndroidWhatsNew(set_capabilities, setup_logging)
+        android_whats_new_page = AndroidWhatsNew(android_driver, setup_logging)
 
         android_whats_new_page.navigate_features()
         assert android_whats_new_page.navigate_features().text == strings.WHATS_NEW_DONE
         assert android_whats_new_page.exit_features() == Globals.MAIN_DASHBOARD_ACTIVITY_NAME
 
-    def test_start_main_dashboard_smoke(self, set_capabilities, setup_logging):
+    def test_start_main_dashboard_smoke(self, android_driver, setup_logging):
         """
         Scenarios:
             Verify Main Dashboard screen is loaded successfully
         """
 
         setup_logging.info('-- Starting Main Dashboard Test Case --')
-        android_main_dashboard_page = AndroidMainDashboard(set_capabilities, setup_logging)
+        android_main_dashboard_page = AndroidMainDashboard(android_driver, setup_logging)
         global_contents = Globals(setup_logging)
 
         assert android_main_dashboard_page.on_screen() == global_contents.MAIN_DASHBOARD_ACTIVITY_NAME
 
-    def test_main_dashboard_ui_elements(self, set_capabilities, setup_logging):
+    def test_main_dashboard_ui_elements(self, android_driver, setup_logging):
         """
          Scenarios:
                 Verify following contents are visible on screen, 
@@ -236,7 +236,7 @@ class TestAndroidedXApp:
                 Verify that Courses tab will be selected by default
         """
 
-        android_main_dashboard_page = AndroidMainDashboard(set_capabilities, setup_logging)
+        android_main_dashboard_page = AndroidMainDashboard(android_driver, setup_logging)
 
         assert android_main_dashboard_page.get_profile_icon().text == strings.BLANK_FIELD
         assert android_main_dashboard_page.get_title_textview().text == strings.MAIN_DASHBOARD_SCREEN_TITLE
@@ -244,7 +244,7 @@ class TestAndroidedXApp:
         assert android_main_dashboard_page.get_courses_tab().text == strings.MAIN_DASHBOARD_COURSES_TAB
         assert android_main_dashboard_page.get_discovery_tab().text == strings.MAIN_DASHBOARD_DISCOVERY_TAB
 
-    def test_main_dashboard_load_contents_smoke(self, set_capabilities, setup_logging):
+    def test_main_dashboard_load_contents_smoke(self, android_driver, setup_logging):
         """
         Scenarios:
                 Verify on tapping Courses will load Courses contents in its tab
@@ -255,7 +255,7 @@ class TestAndroidedXApp:
                 Verify tapping back/cancel icon from Account Screen should get back to Main Dashboard screen
         """
 
-        android_main_dashboard_page = AndroidMainDashboard(set_capabilities, setup_logging)
+        android_main_dashboard_page = AndroidMainDashboard(android_driver, setup_logging)
         global_contents = Globals(setup_logging)
 
         assert android_main_dashboard_page.get_programs_tab().text == strings.MAIN_DASHBOARD_PROGRAMS_TAB
@@ -265,25 +265,25 @@ class TestAndroidedXApp:
         assert android_main_dashboard_page.get_courses_tab().text == strings.MAIN_DASHBOARD_COURSES_TAB
         assert android_main_dashboard_page.load_courses_tab()
         assert android_main_dashboard_page.load_profile_screen() == global_contents.PROFILE_ACTIVITY_NAME
-        set_capabilities.back()
+        android_driver.back()
 
         assert android_main_dashboard_page.load_account_screen() == global_contents.ACCOUNT_ACTIVITY_NAME
-        set_capabilities.back()
+        android_driver.back()
 
-    def test_main_dashboard_logout_smoke(self, set_capabilities, setup_logging):
+    def test_main_dashboard_logout_smoke(self, android_driver, setup_logging):
         """
         Scenario:
                 Verify that user can log out successfully, and back on Login screen
         """
 
-        android_main_dashboard_page = AndroidMainDashboard(set_capabilities, setup_logging)
+        android_main_dashboard_page = AndroidMainDashboard(android_driver, setup_logging)
         global_contents = Globals(setup_logging)
 
         assert android_main_dashboard_page.load_account_screen() == global_contents.ACCOUNT_ACTIVITY_NAME
         assert android_main_dashboard_page.log_out() == global_contents.NEW_LOGISTRATION_ACTIVITY_NAME
         setup_logging.info('{} is successfully logged out'.format(global_contents.login_user_name))
 
-    def test_main_dashboard_landscape_smoke(self, set_capabilities, setup_logging):
+    def test_main_dashboard_landscape_smoke(self, android_driver, setup_logging):
         """
         Scenarios:
                 Landscape support is added for Main Dashboard screen with following cases,
@@ -302,9 +302,9 @@ class TestAndroidedXApp:
         """
 
         global_contents = Globals(setup_logging)
-        android_main_dashboard_page = AndroidMainDashboard(set_capabilities, setup_logging)
-        android_new_landing_page = AndroidNewLanding(set_capabilities, setup_logging)
-        android_login_page = AndroidLogin(set_capabilities, setup_logging)
+        android_main_dashboard_page = AndroidMainDashboard(android_driver, setup_logging)
+        android_new_landing_page = AndroidNewLanding(android_driver, setup_logging)
+        android_login_page = AndroidLogin(android_driver, setup_logging)
 
         assert android_new_landing_page.on_screen() == Globals.DISCOVERY_LAUNCH_ACTIVITY_NAME
         assert android_new_landing_page.load_login_screen() == Globals.LOGIN_ACTIVITY_NAME
@@ -314,7 +314,7 @@ class TestAndroidedXApp:
         setup_logging.info('{} is successfully logged in'.format(global_contents.login_user_name))
         assert login_output == Globals.MAIN_DASHBOARD_ACTIVITY_NAME
 
-        global_contents.turn_orientation(set_capabilities, global_contents.LANDSCAPE_ORIENTATION)
+        global_contents.turn_orientation(android_driver, global_contents.LANDSCAPE_ORIENTATION)
 
         assert android_main_dashboard_page.get_profile_icon().text == strings.BLANK_FIELD
         assert android_main_dashboard_page.get_title_textview().text == strings.MAIN_DASHBOARD_SCREEN_TITLE
@@ -326,14 +326,14 @@ class TestAndroidedXApp:
         assert android_main_dashboard_page.load_programs_tab()
         assert android_main_dashboard_page.load_courses_tab()
         assert android_main_dashboard_page.load_profile_screen() == global_contents.PROFILE_ACTIVITY_NAME
-        set_capabilities.back()
+        android_driver.back()
         assert android_main_dashboard_page.load_account_screen() == global_contents.ACCOUNT_ACTIVITY_NAME
-        set_capabilities.back()
-        global_contents.turn_orientation(set_capabilities, global_contents.PORTRAIT_ORIENTATION)
+        android_driver.back()
+        global_contents.turn_orientation(android_driver, global_contents.PORTRAIT_ORIENTATION)
 
         setup_logging.info('-- Ending Main Dashboard Test Case --')
 
-    def test_start_my_courses_list_smoke(self, set_capabilities, setup_logging):
+    def test_start_my_courses_list_smoke(self, android_driver, setup_logging):
         """
         Scenarios:
             Verify that from Main Dashboard tapping Courses tab will load My Courses
@@ -341,12 +341,12 @@ class TestAndroidedXApp:
         """
 
         setup_logging.info('-- Starting My Courses List Test Case --')
-        android_main_dashboard_page = AndroidMainDashboard(set_capabilities, setup_logging)
+        android_main_dashboard_page = AndroidMainDashboard(android_driver, setup_logging)
 
         assert android_main_dashboard_page.get_courses_tab().text == strings.MAIN_DASHBOARD_COURSES_TAB
         assert android_main_dashboard_page.load_courses_tab()
 
-    def test_my_courses_list_ui_elements_smoke(self, set_capabilities, setup_logging):
+    def test_my_courses_list_ui_elements_smoke(self, android_driver, setup_logging):
         """
         Scenarios:
             Verify that from Main Dashboard  tapping Courses tab will load My Courses
@@ -367,8 +367,8 @@ class TestAndroidedXApp:
 
         """
 
-        android_main_dashboard_page = AndroidMainDashboard(set_capabilities, setup_logging)
-        android_my_courses_list_page = AndroidMyCoursesList(set_capabilities, setup_logging)
+        android_main_dashboard_page = AndroidMainDashboard(android_driver, setup_logging)
+        android_my_courses_list_page = AndroidMyCoursesList(android_driver, setup_logging)
         global_contents = Globals(setup_logging)
 
         assert android_main_dashboard_page.get_profile_icon().text == strings.BLANK_FIELD
@@ -380,7 +380,7 @@ class TestAndroidedXApp:
         if android_my_courses_list_page.get_my_courses_list():
             assert android_my_courses_list_page.get_my_courses_list_row()
             android_my_courses_list_page.get_contents_from_list()
-            global_contents.swipe_screen(set_capabilities)
+            global_contents.swipe_screen(android_driver)
         else:
             setup_logging.info('No course enrolled by this user.')
 
@@ -389,7 +389,7 @@ class TestAndroidedXApp:
         find_courses_button = android_my_courses_list_page.get_find_course_button().text
         assert find_courses_button == strings.MY_COURSES_LIST_FIND_COURSES_BUTTON_ANDROID
 
-    def test_my_courses_list_load_course_details_smoke(self, set_capabilities, setup_logging):
+    def test_my_courses_list_load_course_details_smoke(self, android_driver, setup_logging):
         """
         Scenarios:
             Verify that tapping any course should load specific Course Dashboard screen
@@ -400,17 +400,17 @@ class TestAndroidedXApp:
 
         """
 
-        android_main_dashboard_page = AndroidMainDashboard(set_capabilities, setup_logging)
-        android_my_courses_list_page = AndroidMyCoursesList(set_capabilities, setup_logging)
-        android_main_dashboard_page = AndroidMainDashboard(set_capabilities, setup_logging)
+        android_main_dashboard_page = AndroidMainDashboard(android_driver, setup_logging)
+        android_my_courses_list_page = AndroidMyCoursesList(android_driver, setup_logging)
+        android_main_dashboard_page = AndroidMainDashboard(android_driver, setup_logging)
         global_contents = Globals(setup_logging)
 
         if android_my_courses_list_page.get_my_courses_list_row():
             course_dashboard_screen = android_my_courses_list_page.load_course_details_screen()
             assert course_dashboard_screen == global_contents.COURSE_DASHBOARD_ACTIVITY_NAME
-            set_capabilities.back()
+            android_driver.back()
             assert android_main_dashboard_page.on_screen() == global_contents.MAIN_DASHBOARD_ACTIVITY_NAME
-            global_contents.swipe_screen(set_capabilities)
+            global_contents.swipe_screen(android_driver)
 
         else:
             setup_logging.info('No course enrolled by this user.')
@@ -421,7 +421,7 @@ class TestAndroidedXApp:
         android_main_dashboard_page.load_courses_tab()
         assert android_main_dashboard_page.get_courses_tab().is_selected()
 
-    def test_my_courses_list_landscape_smoke(self, set_capabilities, setup_logging):
+    def test_my_courses_list_landscape_smoke(self, android_driver, setup_logging):
         """
         Scenarios:
             Change device orientation to Landscape mode
@@ -449,11 +449,11 @@ class TestAndroidedXApp:
             Verity that from Course Dashboard tapping back should load My Courses List screen
         """
 
-        android_main_dashboard_page = AndroidMainDashboard(set_capabilities, setup_logging)
-        android_my_courses_list_page = AndroidMyCoursesList(set_capabilities, setup_logging)
+        android_main_dashboard_page = AndroidMainDashboard(android_driver, setup_logging)
+        android_my_courses_list_page = AndroidMyCoursesList(android_driver, setup_logging)
         global_contents = Globals(setup_logging)
 
-        global_contents.turn_orientation(set_capabilities, global_contents.LANDSCAPE_ORIENTATION)
+        global_contents.turn_orientation(android_driver, global_contents.LANDSCAPE_ORIENTATION)
 
         assert android_main_dashboard_page.get_profile_icon().text == strings.BLANK_FIELD
         assert android_main_dashboard_page.get_title_textview().text == strings.MAIN_DASHBOARD_COURSES_TAB
@@ -466,9 +466,9 @@ class TestAndroidedXApp:
             android_my_courses_list_page.get_contents_from_list()
             course_dashboard_screen = android_my_courses_list_page.load_course_details_screen()
             assert course_dashboard_screen == global_contents.COURSE_DASHBOARD_ACTIVITY_NAME
-            set_capabilities.back()
+            android_driver.back()
             assert android_main_dashboard_page.on_screen() == global_contents.MAIN_DASHBOARD_ACTIVITY_NAME
-            global_contents.swipe_screen(set_capabilities)
+            global_contents.swipe_screen(android_driver)
 
         else:
             setup_logging.info('No course enrolled by this user.')
@@ -481,11 +481,11 @@ class TestAndroidedXApp:
         course_discovery_screen = android_my_courses_list_page.load_discovery_screen()
         assert course_discovery_screen == global_contents.MAIN_DASHBOARD_ACTIVITY_NAME
         assert android_main_dashboard_page.get_discovery_tab().is_selected()
-        global_contents.turn_orientation(set_capabilities, global_contents.PORTRAIT_ORIENTATION)
+        global_contents.turn_orientation(android_driver, global_contents.PORTRAIT_ORIENTATION)
 
         setup_logging.info('-- Ending My Courses Test Case --')
 
-    def test_course_discovery_screen(self, set_capabilities, setup_logging):
+    def test_course_discovery_screen(self, android_driver, setup_logging):
         """
         Scenarios:
             Verify that from Main Dashboard tapping on Discovery tab will load Discovery
@@ -493,12 +493,12 @@ class TestAndroidedXApp:
         """
 
         setup_logging.info('-- Starting Course Disovery Test Case --')
-        android_main_dashboard_page = AndroidMainDashboard(set_capabilities, setup_logging)
+        android_main_dashboard_page = AndroidMainDashboard(android_driver, setup_logging)
 
         assert android_main_dashboard_page.get_discovery_tab().text == strings.MAIN_DASHBOARD_DISCOVERY_TAB
         assert android_main_dashboard_page.load_discovery_tab()
 
-    def test_course_discovery_ui_elements_smoke(self, set_capabilities, setup_logging):
+    def test_course_discovery_ui_elements_smoke(self, android_driver, setup_logging):
         """
         Scenarios:
         Verify that Discovery tab will show following contents,
@@ -512,8 +512,8 @@ class TestAndroidedXApp:
         Filter courses option
         """
 
-        android_main_dashboard_page = AndroidMainDashboard(set_capabilities, setup_logging)
-        android_course_discovery_page = AndroidCourseDiscovery(set_capabilities, setup_logging)
+        android_main_dashboard_page = AndroidMainDashboard(android_driver, setup_logging)
+        android_course_discovery_page = AndroidCourseDiscovery(android_driver, setup_logging)
         global_contents = Globals(setup_logging)
 
         assert android_main_dashboard_page.get_profile_icon().text == strings.BLANK_FIELD
@@ -533,7 +533,7 @@ class TestAndroidedXApp:
         setup_logging.info('{} is successfully logged out'.format(global_contents.login_user_name))
         setup_logging.info('-- Ending Course Disovery Test Case --')
 
-    def test_start_register_smoke(self, set_capabilities, setup_logging):
+    def test_start_register_smoke(self, android_driver, setup_logging):
         """
         Scenario:
             Verify Register screen is loaded successfully
@@ -541,13 +541,13 @@ class TestAndroidedXApp:
 
         setup_logging.info('-- Starting Register Test Case --')
 
-        android_new_landing_page = AndroidNewLanding(set_capabilities, setup_logging)
-        android_register_page = AndroidRegister(set_capabilities, setup_logging)
+        android_new_landing_page = AndroidNewLanding(android_driver, setup_logging)
+        android_register_page = AndroidRegister(android_driver, setup_logging)
 
         android_new_landing_page.load_register_screen()
         assert android_register_page.on_screen() == Globals.REGISTER_ACTIVITY_NAME
 
-    def test_ui_elements_smoke(self, set_capabilities, setup_logging):
+    def test_ui_elements_smoke(self, android_driver, setup_logging):
         """
         Scenarios:
 
@@ -567,7 +567,7 @@ class TestAndroidedXApp:
         Verify that user should be able to scroll screen to see all contents
         """
 
-        android_register_page = AndroidRegister(set_capabilities, setup_logging)
+        android_register_page = AndroidRegister(android_driver, setup_logging)
 
         assert android_register_page.get_register_divider_textview().text == strings.REGISTER_SCREEN_REGISTER_WITH
         assert android_register_page.get_facebook_textview().text == strings.FACEBOOK_OPTION
@@ -599,7 +599,7 @@ class TestAndroidedXApp:
         assert android_register_page.get_create_my_account_textview().text == strings.REGISTER_CREATE_MY_ACCOUNT
         assert android_register_page.get_agreement_textview().text == strings.REGISTER_AGREEMENT_ANDROID
 
-    def test_show_hide_optional_fields_smoke(self, set_capabilities, setup_logging):
+    def test_show_hide_optional_fields_smoke(self, android_driver, setup_logging):
         """
         Scenarios:
 
@@ -612,7 +612,7 @@ class TestAndroidedXApp:
         Verify all optional contents/elements have default values
         """
 
-        android_register_page = AndroidRegister(set_capabilities, setup_logging)
+        android_register_page = AndroidRegister(android_driver, setup_logging)
 
         assert android_register_page.show_hide_optional_fields().text == strings.REGISTER_HIDE_OPTIONAL_FIELDS_OPTION
 
@@ -623,7 +623,7 @@ class TestAndroidedXApp:
 
         assert android_register_page.show_hide_optional_fields().text == strings.REGISTER_SHOW_OPTIONAL_FIELDS_OPTION
 
-    def test_back_and_forth_smoke(self, set_capabilities, setup_logging):
+    def test_back_and_forth_smoke(self, android_driver, setup_logging):
         """
         Scenarios:
                 Verify tapping "Back" icon will load New Logistration/New Landing screen
@@ -636,14 +636,14 @@ class TestAndroidedXApp:
                 Verify that user is able to load Privacy screen and get back to Register Screen
         """
 
-        android_register_page = AndroidRegister(set_capabilities, setup_logging)
+        android_register_page = AndroidRegister(android_driver, setup_logging)
 
         assert android_register_page.back_and_forth_register()
         # android_register_page.load_eula_screen()
         # android_register_page.load_terms_screen()
         # android_register_page.load_privacy_screen()
 
-    def test_required_and_optional_fields_smoke(self, set_capabilities, setup_logging):
+    def test_required_and_optional_fields_smoke(self, android_driver, setup_logging):
         """
         Scenarios:
 
@@ -655,7 +655,7 @@ class TestAndroidedXApp:
             "Tell us why you're interested in edX" label with edit - field below
         """
 
-        android_register_page = AndroidRegister(set_capabilities, setup_logging)
+        android_register_page = AndroidRegister(android_driver, setup_logging)
         assert android_register_page.validate_required_optional_fields()
         assert android_register_page.get_email_validation_textview().text == strings.REGISTER_EMAIL_BLANK_ERROR
         assert android_register_page.get_full_name_validation_textview().text == strings.REGISTER_FULL_NAME_BLANK_ERROR
@@ -663,14 +663,14 @@ class TestAndroidedXApp:
         assert android_register_page.get_password_validation_textview().text == strings.REGISTER_PASSWORD_BLANK_ERROR
         assert android_register_page.get_country_validation_textview().text == strings.REGISTER_COUNTRY_BLANK_ERROR
 
-    def test_register_smoke(self, set_capabilities, setup_logging):
+    def test_register_smoke(self, android_driver, setup_logging):
         """
         Verify that tapping "Create your account" button after filling all required input(valid) types,
             will validate all inputs and load "Whats new feature screen" with specific user logged in
         Verify that user should be able to log out and re-login with new created account credentials
         """
 
-        android_register_page = AndroidRegister(set_capabilities, setup_logging)
+        android_register_page = AndroidRegister(android_driver, setup_logging)
         global_contents = Globals(setup_logging)
 
         user_name = global_contents.generate_random_credentials(4)
@@ -694,21 +694,21 @@ class TestAndroidedXApp:
                                                          )
 
         global_contents.wait_for_android_activity_to_load(
-            set_capabilities,
+            android_driver,
             global_contents.REGISTER_ACTIVITY_NAME
         )
 
         assert register_output == Globals.MAIN_DASHBOARD_ACTIVITY_NAME
 
-        android_main_dashboard_page = AndroidMainDashboard(set_capabilities, setup_logging)
+        android_main_dashboard_page = AndroidMainDashboard(android_driver, setup_logging)
         assert android_main_dashboard_page.load_account_screen() == global_contents.ACCOUNT_ACTIVITY_NAME
         assert android_main_dashboard_page.get_logout_account_option().text == strings.ACCOUNT_LOGOUT
         assert android_main_dashboard_page.log_out() == Globals.DISCOVERY_LAUNCH_ACTIVITY_NAME
 
-        android_new_landing_page = AndroidNewLanding(set_capabilities, setup_logging)
+        android_new_landing_page = AndroidNewLanding(android_driver, setup_logging)
         assert android_new_landing_page.load_login_screen() == Globals.LOGIN_ACTIVITY_NAME
 
-        android_login_page = AndroidLogin(set_capabilities, setup_logging)
+        android_login_page = AndroidLogin(android_driver, setup_logging)
 
         login_output = android_login_page.login(
             user_name,

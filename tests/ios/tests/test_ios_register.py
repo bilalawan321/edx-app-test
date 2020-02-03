@@ -18,7 +18,7 @@ class TestIosRegister:
     Register Screen Test Case
     """
 
-    def test_start_register_smoke(self, set_capabilities, setup_logging):
+    def test_start_register_smoke(self, ios_driver, setup_logging):
         """
         Scenario:
             Verify Register screen is loaded successfully
@@ -26,13 +26,13 @@ class TestIosRegister:
 
         setup_logging.info('-- Starting Test Case')
 
-        ios_new_landing_page = IosNewLanding(set_capabilities, setup_logging)
-        ios_register_page = IosRegister(set_capabilities, setup_logging)
+        ios_new_landing_page = IosNewLanding(ios_driver, setup_logging)
+        ios_register_page = IosRegister(ios_driver, setup_logging)
 
         ios_new_landing_page.load_register_screen()
         assert ios_register_page.get_register_divider_textview().text == strings.REGISTER_SCREEN_REGISTER_WITH
 
-    def test_ui_elements_smoke(self, set_capabilities, setup_logging):
+    def test_ui_elements_smoke(self, ios_driver, setup_logging):
         """
         Scenarios:
 
@@ -52,7 +52,7 @@ class TestIosRegister:
         Verify that user should be able to scroll screen to see all contents
         """
 
-        ios_register_page = IosRegister(set_capabilities, setup_logging)
+        ios_register_page = IosRegister(ios_driver, setup_logging)
 
         assert ios_register_page.get_register_close_button()
         assert ios_register_page.get_register_divider_textview().text == strings.REGISTER_SCREEN_REGISTER_WITH
@@ -85,7 +85,7 @@ class TestIosRegister:
         assert ios_register_page.get_create_my_account_textview().text == strings.REGISTER_CREATE_MY_ACCOUNT
         assert ios_register_page.get_agreement_textview().text == strings.REGISTER_AGREEMENT
 
-    def test_show_hide_optional_fields_smoke(self, set_capabilities, setup_logging):
+    def test_show_hide_optional_fields_smoke(self, ios_driver, setup_logging):
         """
         Scenarios:
 
@@ -98,7 +98,7 @@ class TestIosRegister:
         Verify all optional contents/elements have default values
         """
 
-        ios_register_page = IosRegister(set_capabilities, setup_logging)
+        ios_register_page = IosRegister(ios_driver, setup_logging)
 
         optional_fields = ios_register_page.get_show_optional_fields_textview().text
         assert optional_fields == strings.REGISTER_SHOW_OPTIONAL_FIELDS_OPTION
@@ -122,7 +122,7 @@ class TestIosRegister:
         assert ios_register_page.hide_optional_fields().text == strings.REGISTER_SHOW_OPTIONAL_FIELDS_OPTION
         assert ios_register_page.get_agreement_textview().text == strings.REGISTER_AGREEMENT
 
-    def test_back_and_forth_smoke(self, set_capabilities, setup_logging):
+    def test_back_and_forth_smoke(self, ios_driver, setup_logging):
         """
         Scenarios:
 
@@ -136,14 +136,14 @@ class TestIosRegister:
         Verify that user is able to load Privacy screen and get back to Register Screen
         """
 
-        ios_register_page = IosRegister(set_capabilities, setup_logging)
+        ios_register_page = IosRegister(ios_driver, setup_logging)
 
         assert ios_register_page.back_and_forth_register()
         assert ios_register_page.load_eula_screen().text == strings.REGISTER_SCREEN_REGISTER_WITH
         assert ios_register_page.load_terms_screen().text == strings.REGISTER_SCREEN_REGISTER_WITH
         assert ios_register_page.load_privacy_screen().text == strings.REGISTER_SCREEN_REGISTER_WITH
 
-    def test_required_fields_smoke(self, set_capabilities, setup_logging):
+    def test_required_fields_smoke(self, ios_driver, setup_logging):
         """
         Scenarios:
 
@@ -153,7 +153,7 @@ class TestIosRegister:
         Verify that app will show specific error message against each field
         """
 
-        ios_register_page = IosRegister(set_capabilities, setup_logging)
+        ios_register_page = IosRegister(ios_driver, setup_logging)
 
         if ios_register_page.validate_required_optional_fields():
             assert ios_register_page.get_email_validation_textview().text == strings.REGISTER_EMAIL_BLANK_ERROR
@@ -165,7 +165,7 @@ class TestIosRegister:
         else:
             setup_logging.info('Something wrong with validations checks')
 
-    def test_register_smoke(self, set_capabilities, setup_logging):
+    def test_register_smoke(self, ios_driver, setup_logging):
         """
             Verify that tapping "Create your account" button after filling all required input(valid) types,
                 will validate all inputs and load "Whats new feature screen" with specific user logged in
@@ -179,10 +179,10 @@ class TestIosRegister:
             Verify that user should be able to log out and re-login with new created account credentials
         """
 
-        ios_register_page = IosRegister(set_capabilities, setup_logging)
-        ios_login_page = IosLogin(set_capabilities, setup_logging)
-        ios_whats_new_page = IosWhatsNew(set_capabilities, setup_logging)
-        ios_main_dashboard_page = IosMainDashboard(set_capabilities, setup_logging)
+        ios_register_page = IosRegister(ios_driver, setup_logging)
+        ios_login_page = IosLogin(ios_driver, setup_logging)
+        ios_whats_new_page = IosWhatsNew(ios_driver, setup_logging)
+        ios_main_dashboard_page = IosMainDashboard(ios_driver, setup_logging)
         global_contents = Globals(setup_logging)
 
         user_name = global_contents.generate_random_credentials(4)
