@@ -15,7 +15,7 @@ class TestAndroidWhatsNews:
     Whats New screen's Test Case
     """
 
-    def test_start_whats_new_smoke(self, setup_logging, set_capabilities, login):
+    def test_start_whats_new_smoke(self, setup_logging, android_driver, login):
         """
         Scenarios:
             Verify Whats New screen is loaded successfully
@@ -24,13 +24,13 @@ class TestAndroidWhatsNews:
         setup_logging.info('-- Starting Test Case')
 
         if login:
-            android_whats_new_page = AndroidWhatsNew(set_capabilities, setup_logging)
+            android_whats_new_page = AndroidWhatsNew(android_driver, setup_logging)
             assert android_whats_new_page.on_screen() == Globals.WHATS_NEW_ACTIVITY_NAME
         else:
-            android_main_dashboard_page = AndroidMainDashboard(set_capabilities, setup_logging)
+            android_main_dashboard_page = AndroidMainDashboard(android_driver, setup_logging)
             assert android_main_dashboard_page.on_screen() == Globals.MAIN_DASHBOARD_ACTIVITY_NAME
 
-    def test_validate_ui_elements_smoke(self, set_capabilities, setup_logging, login):
+    def test_validate_ui_elements_smoke(self, android_driver, setup_logging, login):
         """
         Scenarios:
                 Verify following contents are visible on screen 
@@ -40,7 +40,7 @@ class TestAndroidWhatsNews:
         """
 
         if login:
-            android_whats_new_page = AndroidWhatsNew(set_capabilities, setup_logging)
+            android_whats_new_page = AndroidWhatsNew(android_driver, setup_logging)
 
             assert android_whats_new_page.get_title_textview()
             assert android_whats_new_page.get_cross_icon()
@@ -51,46 +51,46 @@ class TestAndroidWhatsNews:
         else:
             setup_logging.info('validate_ui_elements is not needed')
 
-    def test_navigate_features_smoke(self, set_capabilities, setup_logging, login):
+    def test_navigate_features_smoke(self, android_driver, setup_logging, login):
         """
         Verifies that user can navigate between features
         """
 
         if login:
-            android_whats_new_page = AndroidWhatsNew(set_capabilities, setup_logging)
+            android_whats_new_page = AndroidWhatsNew(android_driver, setup_logging)
             android_whats_new_page.navigate_features()
             assert android_whats_new_page.navigate_features().text == strings.WHATS_NEW_DONE
 
         else:
             setup_logging.info('navigate_features is not needed')
 
-    def test_close_features_screen_smoke(self, set_capabilities, setup_logging, login):
+    def test_close_features_screen_smoke(self, android_driver, setup_logging, login):
         """
         Verifies that user can close New Feature screen and move to Main Dashboard screen
         """
 
         if login:
-            android_whats_new_page = AndroidWhatsNew(set_capabilities, setup_logging)
+            android_whats_new_page = AndroidWhatsNew(android_driver, setup_logging)
             assert android_whats_new_page.exit_features() == Globals.MAIN_DASHBOARD_ACTIVITY_NAME
 
         else:
             setup_logging.info('close_features is not needed')
 
-    def test_re_login_smoke(self, setup_logging, set_capabilities):
+    def test_re_login_smoke(self, setup_logging, android_driver):
         """
         Scenarios:
             Verify after re-login with same user "Whats New" screen will not be visible
         """
 
         global_contents = Globals(setup_logging)
-        android_main_dashboard_page = AndroidMainDashboard(set_capabilities, setup_logging)
+        android_main_dashboard_page = AndroidMainDashboard(android_driver, setup_logging)
 
         assert android_main_dashboard_page.get_logout_account_option().text == strings.ACCOUNT_LOGOUT
         assert android_main_dashboard_page.log_out() == global_contents.NEW_LOGISTRATION_ACTIVITY_NAME
         setup_logging.info('{} is successfully logged out'.format(global_contents.login_user_name))
 
-        android_login_page = AndroidLogin(set_capabilities, setup_logging)
-        android_new_landing_page = AndroidNewLanding(set_capabilities, setup_logging)
+        android_login_page = AndroidLogin(android_driver, setup_logging)
+        android_new_landing_page = AndroidNewLanding(android_driver, setup_logging)
 
         assert android_new_landing_page.load_login_screen() == Globals.LOGIN_ACTIVITY_NAME
         login_output = android_login_page.login(global_contents.login_user_name, global_contents.login_password, False)

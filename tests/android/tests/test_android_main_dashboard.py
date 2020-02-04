@@ -15,7 +15,7 @@ class TestAndroidMainDashboard:
     Main Dashboard screen's Test Case
     """
 
-    def test_start_main_dashboard_smoke(self, login, set_capabilities, setup_logging):
+    def test_start_main_dashboard_smoke(self, login, android_driver, setup_logging):
         """
         Scenarios:
             Verify Main Dashboard screen is loaded successfully
@@ -26,11 +26,11 @@ class TestAndroidMainDashboard:
         if login:
             setup_logging.info('{} is successfully logged in'.format(global_contents.login_user_name))
 
-        android_whats_new_page = AndroidWhatsNew(set_capabilities, setup_logging)
+        android_whats_new_page = AndroidWhatsNew(android_driver, setup_logging)
         android_whats_new_page.navigate_features()
         assert android_whats_new_page.exit_features() == Globals.MAIN_DASHBOARD_ACTIVITY_NAME
 
-    def test_validate_ui_elements(self, set_capabilities, setup_logging):
+    def test_validate_ui_elements(self, android_driver, setup_logging):
         """
          Scenarios:
                 Verify following contents are visible on screen, 
@@ -39,7 +39,7 @@ class TestAndroidMainDashboard:
                 Verify that Courses tab will be selected by default
         """
 
-        android_main_dashboard_page = AndroidMainDashboard(set_capabilities, setup_logging)
+        android_main_dashboard_page = AndroidMainDashboard(android_driver, setup_logging)
 
         assert android_main_dashboard_page.get_profile_icon().text == strings.BLANK_FIELD
         assert android_main_dashboard_page.get_title_textview().text == strings.MAIN_DASHBOARD_SCREEN_TITLE
@@ -47,7 +47,7 @@ class TestAndroidMainDashboard:
         assert android_main_dashboard_page.get_courses_tab().text == strings.MAIN_DASHBOARD_COURSES_TAB
         assert android_main_dashboard_page.get_discovery_tab().text == strings.MAIN_DASHBOARD_DISCOVERY_TAB
 
-    def test_load_contents_smoke(self, set_capabilities, setup_logging):
+    def test_load_contents_smoke(self, android_driver, setup_logging):
         """
         Scenarios:
                 Verify on tapping Courses will load Courses contents in its tab
@@ -58,7 +58,7 @@ class TestAndroidMainDashboard:
                 Verify tapping back/cancel icon from Account Screen should get back to Main Dashboard screen
         """
 
-        android_main_dashboard_page = AndroidMainDashboard(set_capabilities, setup_logging)
+        android_main_dashboard_page = AndroidMainDashboard(android_driver, setup_logging)
         global_contents = Globals(setup_logging)
 
         assert android_main_dashboard_page.load_discovery_tab().text == strings.MAIN_DASHBOARD_DISCOVERY_TAB
@@ -67,18 +67,18 @@ class TestAndroidMainDashboard:
         assert android_main_dashboard_page.load_courses_tab().is_selected()
 
         assert android_main_dashboard_page.load_profile_screen() == global_contents.PROFILE_ACTIVITY_NAME
-        set_capabilities.back()
+        android_driver.back()
 
         assert android_main_dashboard_page.load_account_screen() == global_contents.ACCOUNT_ACTIVITY_NAME
-        set_capabilities.back()
+        android_driver.back()
 
-    def test_logout_smoke(self, set_capabilities, setup_logging):
+    def test_logout_smoke(self, android_driver, setup_logging):
         """
         Scenario:
                 Verify that user can log out successfully, and back on Login screen
         """
 
-        android_main_dashboard_page = AndroidMainDashboard(set_capabilities, setup_logging)
+        android_main_dashboard_page = AndroidMainDashboard(android_driver, setup_logging)
         global_contents = Globals(setup_logging)
 
         assert android_main_dashboard_page.get_logout_account_option().text == strings.ACCOUNT_LOGOUT
@@ -87,7 +87,7 @@ class TestAndroidMainDashboard:
 
         setup_logging.info('-- Ending {} Test Case'.format(TestAndroidMainDashboard.__name__))
 
-    def test_landscape_smoke(self, set_capabilities, setup_logging):
+    def test_landscape_smoke(self, android_driver, setup_logging):
         """
         Scenarios:
                 Landscape support is added for Main Dashboard screen with following cases,
@@ -106,9 +106,9 @@ class TestAndroidMainDashboard:
         """
 
         global_contents = Globals(setup_logging)
-        android_main_dashboard_page = AndroidMainDashboard(set_capabilities, setup_logging)
-        android_new_landing_page = AndroidNewLanding(set_capabilities, setup_logging)
-        android_login_page = AndroidLogin(set_capabilities, setup_logging)
+        android_main_dashboard_page = AndroidMainDashboard(android_driver, setup_logging)
+        android_new_landing_page = AndroidNewLanding(android_driver, setup_logging)
+        android_login_page = AndroidLogin(android_driver, setup_logging)
 
         assert android_new_landing_page.on_screen() == Globals.DISCOVERY_LAUNCH_ACTIVITY_NAME
         assert android_new_landing_page.load_login_screen() == Globals.LOGIN_ACTIVITY_NAME
@@ -118,7 +118,7 @@ class TestAndroidMainDashboard:
         setup_logging.info('{} is successfully logged in'.format(global_contents.login_user_name))
         assert login_output == Globals.MAIN_DASHBOARD_ACTIVITY_NAME
 
-        global_contents.turn_orientation(set_capabilities, global_contents.LANDSCAPE_ORIENTATION)
+        global_contents.turn_orientation(android_driver, global_contents.LANDSCAPE_ORIENTATION)
 
         assert android_main_dashboard_page.get_profile_icon().text == strings.BLANK_FIELD
         assert android_main_dashboard_page.get_title_textview().text == strings.MAIN_DASHBOARD_SCREEN_TITLE
@@ -131,13 +131,13 @@ class TestAndroidMainDashboard:
         assert android_main_dashboard_page.load_courses_tab().text == strings.MAIN_DASHBOARD_COURSES_TAB
         assert android_main_dashboard_page.load_courses_tab().is_selected()
         assert android_main_dashboard_page.load_profile_screen() == global_contents.PROFILE_ACTIVITY_NAME
-        set_capabilities.back()
+        android_driver.back()
         assert android_main_dashboard_page.load_account_screen() == global_contents.ACCOUNT_ACTIVITY_NAME
-        set_capabilities.back()
+        android_driver.back()
 
         assert android_main_dashboard_page.get_logout_account_option().text == strings.ACCOUNT_LOGOUT
         assert android_main_dashboard_page.log_out() == global_contents.DISCOVERY_LAUNCH_ACTIVITY_NAME
         setup_logging.info('{} is successfully logged out'.format(global_contents.login_user_name))
-        global_contents.turn_orientation(set_capabilities, global_contents.PORTRAIT_ORIENTATION)
+        global_contents.turn_orientation(android_driver, global_contents.PORTRAIT_ORIENTATION)
 
         setup_logging.info('-- Ending {} Test Case'.format(TestAndroidMainDashboard.__name__))

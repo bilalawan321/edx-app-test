@@ -14,7 +14,7 @@ class TestIosMainDashboard:
     Main Dashboard screen's Test Case
     """
 
-    def test_start_main_dashboard_smoke(self, login, set_capabilities, setup_logging):
+    def test_start_main_dashboard_smoke(self, login, ios_driver, setup_logging):
         """
         Scenarios:
             Verify Main Dashboard screen is loaded successfully
@@ -26,15 +26,15 @@ class TestIosMainDashboard:
         if login:
             setup_logging.info('{} is successfully logged in'.format(global_contents.login_user_name))
 
-        ios_whats_new_page = IosWhatsNew(set_capabilities, setup_logging)
-        ios_main_dashboard_page = IosMainDashboard(set_capabilities, setup_logging)
+        ios_whats_new_page = IosWhatsNew(ios_driver, setup_logging)
+        ios_main_dashboard_page = IosMainDashboard(ios_driver, setup_logging)
 
         if global_contents.is_first_time:
             assert ios_whats_new_page.exit_features().text == strings.MAIN_DASHBOARD_SCREEN_TITLE
         else:
             assert ios_main_dashboard_page.get_drawer_icon().text == strings.MAIN_DASHBOARD_NAVIGATION_MENU_NAME
 
-    def test_validate_ui_elements_smoke(self, set_capabilities, setup_logging):
+    def test_validate_ui_elements_smoke(self, ios_driver, setup_logging):
         """
         Scenarios:
                 Verify following contents are visible on screen, 
@@ -43,7 +43,7 @@ class TestIosMainDashboard:
                 Verify that Courses tab will be selected by default
         """
 
-        ios_main_dashboard_page = IosMainDashboard(set_capabilities, setup_logging)
+        ios_main_dashboard_page = IosMainDashboard(ios_driver, setup_logging)
 
         assert ios_main_dashboard_page.get_profile_icon().text == strings.MAIN_DASHBOARD_PROFILE
         assert ios_main_dashboard_page.get_title_textview_portrait_mode().text == strings.MAIN_DASHBOARD_SCREEN_TITLE
@@ -51,7 +51,7 @@ class TestIosMainDashboard:
         assert ios_main_dashboard_page.get_courses_tab().text == strings.SELECTED_BY_DEFAULT
         assert ios_main_dashboard_page.get_discovery_tab().text == strings.MAIN_DASHBOARD_DISCOVERY_TAB
 
-    def test_load_contents_smoke(self, set_capabilities, setup_logging):
+    def test_load_contents_smoke(self, ios_driver, setup_logging):
         """
         Scenarios:
                 Verify on tapping Courses will load Courses contents in its tab
@@ -62,7 +62,7 @@ class TestIosMainDashboard:
                 Verify tapping back/cancel icon from Account Screen should get back to Main Dashboard screen
         """
 
-        ios_main_dashboard_page = IosMainDashboard(set_capabilities, setup_logging)
+        ios_main_dashboard_page = IosMainDashboard(ios_driver, setup_logging)
 
         assert ios_main_dashboard_page.load_discovery_tab().text == strings.SELECTED_BY_DEFAULT
         assert ios_main_dashboard_page.get_courses_tab().text == strings.MAIN_DASHBOARD_COURSES_TAB
@@ -71,25 +71,25 @@ class TestIosMainDashboard:
         assert ios_main_dashboard_page.get_discovery_tab().text == strings.MAIN_DASHBOARD_DISCOVERY_TAB
 
         assert ios_main_dashboard_page.load_profile_screen().text == strings.PROFILE_SCREEN_TITLE
-        set_capabilities.back()
+        ios_driver.back()
 
         assert ios_main_dashboard_page.load_account_screen().text == strings.ACCOUNT_SCREEN_TITLE
-        set_capabilities.back()
+        ios_driver.back()
 
-    def test_logout_smoke(self, set_capabilities, setup_logging):
+    def test_logout_smoke(self, ios_driver, setup_logging):
         """
         Scenario:
                 Verify that user can log out successfully, and back on Login screen
         """
 
-        ios_main_dashboard_page = IosMainDashboard(set_capabilities, setup_logging)
+        ios_main_dashboard_page = IosMainDashboard(ios_driver, setup_logging)
         global_contents = Globals(setup_logging)
 
         assert ios_main_dashboard_page.get_account_options()[3].text == strings.ACCOUNT_LOGOUT
         assert ios_main_dashboard_page.log_out().text == strings.LOGIN
         setup_logging.info('{} is successfully logged out'.format(global_contents.login_user_name))
 
-    def test_landscape_smoke(self, set_capabilities, setup_logging):
+    def test_landscape_smoke(self, ios_driver, setup_logging):
         """
         Scenarios:
                 Landscape support is added for Main Dashboard screen with following cases,
@@ -108,13 +108,13 @@ class TestIosMainDashboard:
         """
 
         global_contents = Globals(setup_logging)
-        ios_login_page = IosLogin(set_capabilities, setup_logging)
-        ios_main_dashboard_page = IosMainDashboard(set_capabilities, setup_logging)
+        ios_login_page = IosLogin(ios_driver, setup_logging)
+        ios_main_dashboard_page = IosMainDashboard(ios_driver, setup_logging)
 
         assert ios_login_page.login(global_contents.login_user_name, global_contents.login_password, False)
         setup_logging.info('{} is successfully logged in'.format(global_contents.login_user_name))
 
-        global_contents.turn_orientation(set_capabilities, global_contents.LANDSCAPE_ORIENTATION)
+        global_contents.turn_orientation(ios_driver, global_contents.LANDSCAPE_ORIENTATION)
 
         assert ios_main_dashboard_page.get_profile_icon().text == strings.MAIN_DASHBOARD_PROFILE
         assert ios_main_dashboard_page.get_title_textview_landscape_mode().text == strings.MAIN_DASHBOARD_SCREEN_TITLE
@@ -127,13 +127,13 @@ class TestIosMainDashboard:
         assert ios_main_dashboard_page.load_courses_tab().text == strings.SELECTED_BY_DEFAULT
         assert ios_main_dashboard_page.get_discovery_tab().text == strings.MAIN_DASHBOARD_DISCOVERY_TAB
         assert ios_main_dashboard_page.load_profile_screen().text == strings.PROFILE_SCREEN_TITLE
-        set_capabilities.back()
+        ios_driver.back()
         assert ios_main_dashboard_page.load_account_screen().text == strings.ACCOUNT_SCREEN_TITLE
-        set_capabilities.back()
+        ios_driver.back()
 
         assert ios_main_dashboard_page.get_account_options()[3].text == strings.ACCOUNT_LOGOUT
         assert ios_main_dashboard_page.log_out().text == strings.LOGIN
         setup_logging.info('{} is successfully logged out'.format(global_contents.login_user_name))
-        global_contents.turn_orientation(set_capabilities, global_contents.PORTRAIT_ORIENTATION)
+        global_contents.turn_orientation(ios_driver, global_contents.PORTRAIT_ORIENTATION)
 
         setup_logging.info('-- Ending Test Case')

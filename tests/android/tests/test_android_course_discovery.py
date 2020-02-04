@@ -18,7 +18,7 @@ class TestAndroidCourseDiscovery:
     Discovery Test Case
     """
 
-    def test_discovery_screen(self, set_capabilities, setup_logging):
+    def test_discovery_screen(self, android_driver, setup_logging):
         """
         Scenarios:
             Verify that from Main Dashboard tapping on Discovery tab will load Discovery
@@ -28,10 +28,10 @@ class TestAndroidCourseDiscovery:
         setup_logging.info('-- Starting {} Test Case'.format(TestAndroidCourseDiscovery.__name__))
 
         global_contents = Globals(setup_logging)
-        android_new_landing_page = AndroidNewLanding(set_capabilities, setup_logging)
-        android_login_page = AndroidLogin(set_capabilities, setup_logging)
-        android_whats_new_page = AndroidWhatsNew(set_capabilities, setup_logging)
-        android_main_dashboard_page = AndroidMainDashboard(set_capabilities, setup_logging)
+        android_new_landing_page = AndroidNewLanding(android_driver, setup_logging)
+        android_login_page = AndroidLogin(android_driver, setup_logging)
+        android_whats_new_page = AndroidWhatsNew(android_driver, setup_logging)
+        android_main_dashboard_page = AndroidMainDashboard(android_driver, setup_logging)
 
         assert android_new_landing_page.on_screen() == global_contents.DISCOVERY_LAUNCH_ACTIVITY_NAME
         assert android_new_landing_page.load_login_screen() == Globals.LOGIN_ACTIVITY_NAME
@@ -48,7 +48,7 @@ class TestAndroidCourseDiscovery:
         assert android_main_dashboard_page.load_discovery_tab().text == strings.MAIN_DASHBOARD_DISCOVERY_TAB
         assert android_main_dashboard_page.load_discovery_tab().is_selected()
 
-    def test_ui_elements_smoke(self, set_capabilities, setup_logging):
+    def test_ui_elements_smoke(self, android_driver, setup_logging):
         """
         Scenarios:
         Verify that Discovery tab will show following contents,
@@ -62,8 +62,8 @@ class TestAndroidCourseDiscovery:
         Filter courses option
         """
 
-        android_main_dashboard_page = AndroidMainDashboard(set_capabilities, setup_logging)
-        android_course_discovery_page = AndroidCourseDiscovery(set_capabilities, setup_logging)
+        android_main_dashboard_page = AndroidMainDashboard(android_driver, setup_logging)
+        android_course_discovery_page = AndroidCourseDiscovery(android_driver, setup_logging)
 
         assert android_main_dashboard_page.get_profile_icon().text == strings.BLANK_FIELD
         assert android_main_dashboard_page.get_title_textview().text == strings.COURSES_DISCOVERY_SCREEN_TITLE
