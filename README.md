@@ -90,3 +90,9 @@ Automated testing for edX Android and iOS mobile applications.
 - Open file `grid/smoke.py::TestSmokeGrid` and change the `HUB_URL` to the Selenium Hub Url
 - Go to project root and run the grid file: `pytest -v -s grid/smoke.py::TestSmokeGrid -n auto`
     The flag `-n auto` will automatically setup the appropriate number of threads according to system capabilities (dual core, quad core etc).
+
+## Running the edX project
+- Create saperate desired capabilities method for android and iOS in conftest.py as "android_driver" and "ios_driver" instead of one method with if else conition for android and iOS.
+- Call android and iOS capabilities method in their test files accordingly.
+- Run project with `pytest -v tests/android/tests/test_android_new_landing.py tests/ios/tests/test_ios_new_landing.py -n 4 --dist=loadfile -s`
+      The flag --dist=loadfile will assign single thread to each file to run parallel.
