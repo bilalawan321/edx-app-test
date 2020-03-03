@@ -6,8 +6,12 @@ user_preferences.yml
 *.idea/
 misc/
 results/
+report.html
+venv_grid/
+venv_grid/
 *.pytest_cache/
 *.editorconfig
+assets/
 *.vscode/
 .Python
 # Byte-compiled / optimized / DLL files
