@@ -59,7 +59,7 @@ whats_new_done_button = 'WhatsNewViewController:done-button'
 # MY DASHBOARD SCREEN
 main_dashboard_title_textview = 'Courses'
 main_dashboard_navigation_icon = 'EnrolledTabBarViewController:account-button'
-main_dashboard_profile_icon = 'Pofile'  # Typo from dev side
+main_dashboard_profile_icon = 'Profile'  # Typo from dev side
 main_dashboard_courses_tab = 'Courses'
 main_dashboard_discovery_tab = 'Discovery'
 

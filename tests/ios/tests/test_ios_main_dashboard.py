@@ -30,7 +30,7 @@ class TestIosMainDashboard:
         ios_main_dashboard_page = IosMainDashboard(set_capabilities, setup_logging)
 
         if global_contents.is_first_time:
-            assert ios_whats_new_page.exit_features().text == strings.MAIN_DASHBOARD_SCREEN_TITLE
+            assert ios_whats_new_page.exit_features().text == strings.BLANK_FIELD
         else:
             assert ios_main_dashboard_page.get_drawer_icon().text == strings.MAIN_DASHBOARD_NAVIGATION_MENU_NAME
 
@@ -45,8 +45,9 @@ class TestIosMainDashboard:
 
         ios_main_dashboard_page = IosMainDashboard(set_capabilities, setup_logging)
 
-        assert ios_main_dashboard_page.get_profile_icon().text == strings.MAIN_DASHBOARD_PROFILE
-        assert ios_main_dashboard_page.get_title_textview_portrait_mode().text == strings.MAIN_DASHBOARD_SCREEN_TITLE
+        assert ios_main_dashboard_page.load_profile_screen().text == strings.PROFILE_SCREEN_TITLE
+        set_capabilities.back()
+        assert ios_main_dashboard_page.get_title_textview_portrait_mode().text == strings.BLANK_FIELD
         assert ios_main_dashboard_page.get_drawer_icon().text == strings.MAIN_DASHBOARD_NAVIGATION_MENU_NAME
         assert ios_main_dashboard_page.get_courses_tab().text == strings.SELECTED_BY_DEFAULT
         assert ios_main_dashboard_page.get_discovery_tab().text == strings.MAIN_DASHBOARD_DISCOVERY_TAB
@@ -117,7 +118,7 @@ class TestIosMainDashboard:
         global_contents.turn_orientation(set_capabilities, global_contents.LANDSCAPE_ORIENTATION)
 
         assert ios_main_dashboard_page.get_profile_icon().text == strings.MAIN_DASHBOARD_PROFILE
-        assert ios_main_dashboard_page.get_title_textview_landscape_mode().text == strings.MAIN_DASHBOARD_SCREEN_TITLE
+        assert ios_main_dashboard_page.get_title_textview_landscape_mode().text == strings.BLANK_FIELD
         assert ios_main_dashboard_page.get_drawer_icon().text == strings.MAIN_DASHBOARD_NAVIGATION_MENU_NAME
         assert ios_main_dashboard_page.get_courses_tab().text == strings.SELECTED_BY_DEFAULT
         assert ios_main_dashboard_page.get_discovery_tab().text == strings.MAIN_DASHBOARD_DISCOVERY_TAB
