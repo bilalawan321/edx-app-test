@@ -37,8 +37,8 @@ LOGIN_FORGOT_PASSWORD = 'Forgot your password?'
 LOGIN_IOS_WITH_EMAIL_DIVIDER = 'Or Sign in with'
 # Issue between iOS and Android
 LOGIN_ANDROID_WITH_EMAIL_DIVIDER = 'Or sign in with'
-LOGIN_FACEBOOK_OPTION = 'Register with Facebook'  # 'Facebook'
-LOGIN_GOOGLE_OPTION = 'Register with Google'  # 'Google'
+LOGIN_FACEBOOK_OPTION = 'Sign in with Facebook'  # 'Facebook'
+LOGIN_GOOGLE_OPTION = 'Sign in with Google'  # 'Google'
 LOGIN_RESET_PASSWORD_ALERT_TITLE = 'Reset Password'
 LOGIN_RESET_PASSWORD_ALERT_MSG = ('Enter the e-mail address for your account, and we\'ll send you '
                                   'instructions to reset your password.')
@@ -52,18 +52,20 @@ LOGIN_WRONG_CREDENTIALS_ALERT_MSG = ('Please make sure that your user name or e-
                                      ' address and password are correct and try again.')
 LOGIN_WRONG_CREDENTIALS_ALERT_OK = 'OK'
 LOGIN_ANDROID_AGREEMENT = ('By signing in to this app, you agree to the edX End User License Agreement and edX Terms '
-                           'of Service and Honor Code and acknowledge the Privacy Policy')
+                           'of Service and Honor Code and you acknowledge that edX and each Member process your personal data in accordance with the Privacy Policy')
 LOGIN_IOS_AGREEMENT = ('By signing-in to this app, you agree to the edX End User License Agreement and edX Terms '
-                       'of Service and Honor Code and acknowledge the Privacy Policy.')
+                       'of Service and Honor Code and you acknowledge that edX and each Member process your '
+                       'personal data in accordance with the  Privacy Policy.')
 LOGIN_EULA = 'edX End User License Agreement'
 LOGIN_TERMS = 'edX Terms of Service and Honor Code'
 LOGIN_PRIVACY = 'Privacy Policy'
 
 # WHATS NEW SCREEN
 WHATS_NEW_DONE = 'Done'
+CLOSE_BUTTON_TEXT = 'Close'
 
 # MAIN DASHBOARD SCREEN
-MAIN_DASHBOARD_PROFILE = 'Pofile'  # Typo from dev side
+MAIN_DASHBOARD_PROFILE = 'Profile'  # Typo from dev side
 MAIN_DASHBOARD_SCREEN_TITLE = 'Courses'
 MAIN_DASHBOARD_NAVIGATION_MENU = 'Navigation Menu'
 MAIN_DASHBOARD_COURSES_TAB = 'Courses'
@@ -78,6 +80,8 @@ ACCOUNT_SCREEN_TITLE = 'Account'
 ACCOUNT_LOGOUT = 'Logout'
 
 # REGISTER SCREEN
+REGISTER_FACEBOOK_BUTTON = 'Register with Facebook'
+REGISTER_GOOGLE_BUTTON = 'Register with Google'
 REGISTER_SCREEN_TITLE = 'Register'
 REGISTER_FULL_NAME_LABEL = 'Full Name'
 REGISTER_EMAIL_LABEL = 'Email'
@@ -119,7 +123,7 @@ COURSES_DISCOVERY_COURSES_TAB = 'Courses'
 COURSES_DISCOVERY_PROGRAMS_TAB = 'Programs'
 COURSES_DISCOVERY_DEGREES_TAB = 'Degrees'
 COURSES_DISCOVERY_FILTER_COURSES_LABEL = 'FILTER COURSES'
-COURSES_DISCOVERY_BROWSE_BY_SUBJECT_LABEL = 'Browse by Subject'
+COURSES_DISCOVERY_BROWSE_BY_SUBJECT_LABEL = 'Browse By Subject'
 COURSES_DISCOVERY_SUBJECT_NAME = 'Business & Management'
 DISCOVER_SUBJECTS_SECTION_TITLE = 'Discovery'
 DISCOVERY_VIEW_ALL_SUBJECTS = 'View All Subjects'
@@ -135,7 +139,7 @@ MY_COURSES_LIST_FIND_COURSES_BUTTON_ANDROID = 'Find a Course'
 # NEW LANDING SCREEN
 NEW_LANDING_MESSAGE_IOS = 'Courses from the world\'s best universities in your pocket.'
 NEW_LANDING_MESSAGE_ANDROID = 'Courses from the world’s best universities in your pocket.'
-NEW_LANDING_SEARCH_COURSES = 'Search Courses'
+NEW_LANDING_SEARCH_COURSES = 'Search course'
 NEW_LANDING_CREATE_YOUR_ACCOUNT = 'Create your Account'
 NEW_LANDING_LOG_IN = 'Log In'
 

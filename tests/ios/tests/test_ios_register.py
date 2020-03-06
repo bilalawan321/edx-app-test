@@ -56,8 +56,8 @@ class TestIosRegister:
 
         assert ios_register_page.get_register_close_button()
         assert ios_register_page.get_register_divider_textview().text == strings.REGISTER_SCREEN_REGISTER_WITH
-        assert ios_register_page.get_facebook_textview().text == strings.LOGIN_FACEBOOK_OPTION
-        assert ios_register_page.get_google_textview().text == strings.LOGIN_GOOGLE_OPTION
+        assert ios_register_page.get_facebook_textview().text == strings.REGISTER_FACEBOOK_BUTTON
+        assert ios_register_page.get_google_textview().text == strings.REGISTER_GOOGLE_BUTTON
 
         email_divider = ios_register_page.get_register_with_email_divider_textview()
         assert email_divider.text == strings.REGISTER_WITH_EMAIL_DIVIDER
