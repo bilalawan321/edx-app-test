@@ -318,8 +318,8 @@ class IosLogin(IosBasePage):
                 textview_screen_title = IosWhatsNew(self.driver, self.log).get_title_textview()
                 self.global_contents.is_first_time = False
             else:
-                textview_screen_title = IosWhatsNew(self.driver, self.log).get_close_button()
-                textview_screen_title.click()
+                # textview_screen_title = IosWhatsNew(self.driver, self.log).get_close_button()
+                # textview_screen_title.click()
 
                 textview_screen_title = self.global_contents.wait_and_get_element(
                     self.driver,

@@ -27,7 +27,6 @@ class TestIosMyCoursesList:
         setup_logging.info('-- Starting Test Case')
 
         global_contents = Globals(setup_logging)
-        global_contents.is_first_time = False
         ios_new_landing_page = IosNewLanding(set_capabilities, setup_logging)
         ios_login_page = IosLogin(set_capabilities, setup_logging)
         ios_whats_new_page = IosWhatsNew(set_capabilities, setup_logging)
@@ -43,7 +42,7 @@ class TestIosMyCoursesList:
         setup_logging.info('{} is successfully logged in'.format(global_contents.login_user_name))
 
         if global_contents.is_first_time:
-            assert ios_whats_new_page.exit_features().text == strings.MAIN_DASHBOARD_SCREEN_TITLE
+            assert ios_whats_new_page.exit_features().text == strings.BLANK_FIELD
         else:
             assert ios_main_dashboard_page.get_drawer_icon().text == strings.MAIN_DASHBOARD_NAVIGATION_MENU_NAME
 
