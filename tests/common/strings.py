@@ -140,7 +140,7 @@ MY_COURSES_LIST_FIND_COURSES_BUTTON_ANDROID = 'Find a Course'
 # NEW LANDING SCREEN
 NEW_LANDING_MESSAGE_IOS = 'Courses from the world\'s best universities in your pocket.'
 NEW_LANDING_MESSAGE_ANDROID = 'Courses from the world’s best universities in your pocket.'
-NEW_LANDING_SEARCH_COURSES = 'Search course'
+NEW_LANDING_SEARCH_COURSES = 'Search Courses'
 NEW_LANDING_CREATE_YOUR_ACCOUNT = 'Create your Account'
 NEW_LANDING_LOG_IN = 'Log In'
 
