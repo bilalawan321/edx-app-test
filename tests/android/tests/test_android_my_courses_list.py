@@ -163,7 +163,8 @@ class TestAndroidMyCoursesList:
             assert course_dashboard_screen == global_contents.COURSE_DASHBOARD_ACTIVITY_NAME
             set_capabilities.back()
             assert android_main_dashboard_page.on_screen() == global_contents.MAIN_DASHBOARD_ACTIVITY_NAME
-            global_contents.swipe_screen(set_capabilities)
+            # global_contents.swipe_screen(set_capabilities)
+            android_my_courses_list_page.scroll_course_list_and_click_find_course_button()
 
         else:
             setup_logging.info('No course enrolled by this user.')
