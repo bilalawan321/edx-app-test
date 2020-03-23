@@ -6,6 +6,7 @@ from tests.android.pages import android_elements
 from tests.android.pages.android_base_page import AndroidBasePage
 from tests.android.pages.android_new_landing import AndroidNewLanding
 from tests.common.globals import Globals
+from tests.common import strings
 
 
 class AndroidRegister(AndroidBasePage):
@@ -451,7 +452,6 @@ class AndroidRegister(AndroidBasePage):
         self.driver.hide_keyboard()
 
         self.get_password_editfield().click()
-
         self.get_password_editfield().send_keys(password)
         self.driver.hide_keyboard()
 
@@ -523,6 +523,10 @@ class AndroidRegister(AndroidBasePage):
             list: list of text views
         """
 
+        self.global_contents.wait_for_element_visibility(
+            self.driver,
+            android_elements.all_listviews
+        )
         countries_list_container = self.driver.find_elements_by_class_name(android_elements.all_listviews)
 
         countries_list_values = countries_list_container[
@@ -629,7 +633,7 @@ class AndroidRegister(AndroidBasePage):
 
         return self.global_contents.get_all_views_on_screen_by_id(
             self.driver,
-            android_elements.register_validate_editfield_error_textview)[self.global_contents.second_existence]
+            android_elements.register_validate_editfield_error_textview)[self.global_contents.third_existence]
 
     def get_password_validation_textview(self):
         """
@@ -639,9 +643,18 @@ class AndroidRegister(AndroidBasePage):
               Webdriver element: Password validation Element
         """
 
-        return self.global_contents.get_all_views_on_screen_by_id(
+        self.page_scroll_down()
+        password_field_error = self.global_contents.get_all_views_on_screen_by_id(
             self.driver,
             android_elements.register_validate_editfield_error_textview)[self.global_contents.third_existence]
+
+        if (password_field_error.text != strings.REGISTER_PASSWORD_BLANK_ERROR):
+            password_field_error = self.global_contents.get_all_views_on_screen_by_id(
+                self.driver,
+                android_elements.register_validate_editfield_error_textview)[self.global_contents.fourth_existence]
+            return password_field_error
+        else:
+            return password_field_error
 
     def get_country_validation_textview(self):
         """
@@ -658,4 +671,3 @@ class AndroidRegister(AndroidBasePage):
 
     def page_scroll_down(self):
         self.global_contents.scroll_from_element(self.driver, self.get_password_editfield())
-
