@@ -14,6 +14,10 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions
 from selenium.webdriver.support.wait import WebDriverWait
 from tests.common import strings
+from appium.webdriver.common.touch_action import TouchAction
+from selenium.webdriver.common.touch_actions import TouchActions
+from selenium.webdriver.common.action_chains import ActionChains
+from selenium.webdriver.common.action_chains import ActionBuilder
 
 
 class Globals:
@@ -611,7 +615,7 @@ class WaitForActivity:
     def __call__(self, driver):
         """
         Arguments:
-                driver (webdriver): webdriver instance variable
+            driver (webdriver): webdriver instance variable
 
         Return:
             activity: visible activity name
@@ -625,3 +629,135 @@ class WaitForActivity:
         else:
             self.log.error('{} - {} '.format(self.target_activity, strings.ERROR_SCREEN_NOT_LOADED))
             return False
+
+
+class MultiTouchActions:
+    """
+    Class having multi_touch_actions for android and iOS screens
+    """
+
+    def press_on_element(self, driver, target_element, x=None, y=None, pressure=None):
+
+        """
+        Press on element or coordinates according to the given pressure
+
+        Arguments:
+            driver (webdriver element): webdriver instance variable
+            target_element (str): specific element
+            x (str): x coordinates to specific location
+            y (str): y coordinates to specific location
+            pressure (str): pressure as force touch
+
+        """
+
+        appium_actions = TouchAction(driver)
+        appium_actions.press(target_element, x, y, pressure)
+        appium_actions.perform()
+
+    def long_press_on_element(self, driver, target_element, x=None, y=None, duration=1000):
+        """
+        Press on element or coordinates for the given time
+
+        Arguments:
+            driver (webdriver element): webdriver instance variable
+            target_element (str): specific element
+            x (str): x coordinates to specific location
+            y (str): y coordinates to specific location
+            duration: time in miliseconds
+
+        """
+
+        appium_actions = TouchAction(driver)
+        appium_actions.long_press(target_element, x, y, duration)
+        appium_actions.perform()
+
+    def multiple_tap_on_element(self, driver, target_element, x=None, y=None, count=1):
+        """
+        Multiple tap on targeted element or coordinates according to the count given
+        defualt tap count is 1
+
+        Arguments:
+            driver (webdriver element): webdriver instance variable
+            target_element (str): specific element
+            x (:obj:`int`, optional): x coordinate to tap, relative to the top left corner of the element.
+            y (:obj:`int`, optional): y coordinate. If y is used, x must also be set, and vice versa
+
+        """
+
+        appium_actions = TouchAction(driver)
+        appium_actions.tap(target_element, x, y, count)
+        appium_actions.perform()
+
+    def double_click_on_element(self, target_element):
+
+        """
+        Double click on targeted element
+
+        Arguments:
+            target_element (str): specific element
+
+        """
+
+        target_element.click()
+        target_element.click()
+
+    def click_and_hold(self, driver, target_element):
+
+        """
+        Click and hold on targeted element
+
+        Arguments:
+            driver (webdriver element): webdriver instance variable
+            target_element (str): specific element
+
+        """
+
+        actions = ActionBuilder(driver)
+        actions.pointer_action.click_and_hold(target_element)
+        actions.perform()
+
+    def move_to_element(self, driver, target_element, x=None, y=None):
+
+        """
+        move to targeted element
+
+        Arguments:
+            driver (webdriver element): webdriver instance variable
+            target_element (str): specific element
+
+        """
+
+        actions = ActionBuilder(driver)
+        actions.pointer_action.move_to(target_element, x, y)
+        actions.perform()
+
+    def flick(self, driver, xspeed, yspeed):
+
+        """
+        Flicks, starting anywhere on the screen
+
+        Arguments:
+            driver (webdriver element): webdriver instance variable
+            xspeed: The X speed in pixels per second.
+            yspeed: The Y speed in pixels per second.
+
+        """
+
+        touch_actions = TouchActions(driver)
+        touch_actions.flick(xspeed, yspeed).perform()
+
+    def flick_element(self, driver, on_element, xoffset, yoffset, speed):
+
+        """
+        Flick starting at on_element, and moving by the xoffset and yoffset
+        with specified speed.
+
+        Arguments:
+            on_element: Flick will start at center of element.
+            xoffset: X offset to flick to.
+            yoffset: Y offset to flick to.
+            speed: Pixels per second to flick.
+        """
+
+        touch_actions = TouchActions(driver)
+        touch_actions.flick_element(on_element, xoffset, yoffset, speed).perform()
