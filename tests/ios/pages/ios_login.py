@@ -217,7 +217,7 @@ class IosLogin(IosBasePage):
         return self.global_contents.get_all_views_on_ios_screen(
             self.driver,
             ios_elements.all_buttons
-        )[self.global_contents.first_existence]
+        )[self.global_contents.fourth_existence]
 
     def load_eula_screen(self):
         """
