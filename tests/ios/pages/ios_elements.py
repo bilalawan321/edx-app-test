@@ -62,6 +62,7 @@ main_dashboard_navigation_icon = 'EnrolledTabBarViewController:account-button'
 main_dashboard_profile_icon = 'Profile'  # Typo from dev side
 main_dashboard_courses_tab = 'Courses'
 main_dashboard_discovery_tab = 'Discovery'
+profile_close_button = 'Close'
 
 # MY COURSES LIST SCREEN
 my_courses_list = 'courses-table-view'  # XCUIElementTypeTable

@@ -107,7 +107,7 @@ class IosMainDashboard(IosBasePage):
         return self.global_contents.get_all_views_on_ios_screen(
             self.driver,
             ios_elements.all_textviews
-        )[self.global_contents.first_existence]
+        )[self.global_contents.second_existence]
 
     def load_discovery_tab(self):
         """
@@ -146,7 +146,7 @@ class IosMainDashboard(IosBasePage):
         return self.global_contents.get_all_views_on_ios_screen(
             self.driver,
             ios_elements.all_textviews
-        )[0]
+        )[1]
 
     def get_title_textview_landscape_mode(self):
         """
@@ -173,3 +173,16 @@ class IosMainDashboard(IosBasePage):
         logout_option.click()
 
         return IosLogin(self.driver, self.log).on_screen()
+
+    def get_close_button(self):
+        """
+        Get Close Icon
+
+        Returns:
+             webdriver element: Close Element
+        """
+
+        return self.global_contents.wait_and_get_element(
+            self.driver,
+            ios_elements.profile_close_button
+        )
