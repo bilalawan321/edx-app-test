@@ -65,7 +65,7 @@ class TestIosMyCoursesList:
         assert ios_main_dashboard_page.get_courses_tab().text == strings.SELECTED_BY_DEFAULT
         assert ios_main_dashboard_page.get_discovery_tab().text == strings.MAIN_DASHBOARD_DISCOVERY_TAB
 
-        assert ios_my_courses_list.get_my_courses_list()
+        assert ios_my_courses_list.get_my_courses_list_row()
 
         if ios_my_courses_list.get_my_courses_list_row():
             assert ios_my_courses_list.get_my_course_name()
@@ -73,8 +73,8 @@ class TestIosMyCoursesList:
         else:
             setup_logging.info('No course enrolled by this user.')
 
-        assert ios_my_courses_list.get_find_courses_message().text == strings.MY_COURSES_LIST_FIND_COURSES_MESSAGE
-        assert ios_my_courses_list.get_find_course_button().text == strings.MY_COURSES_LIST_FIND_COURSES_BUTTON_IOS
+        # assert ios_my_courses_list.get_find_courses_message().text == strings.MY_COURSES_LIST_FIND_COURSES_MESSAGE
+        # assert ios_my_courses_list.get_find_course_button().text == strings.MY_COURSES_LIST_FIND_COURSES_BUTTON_IOS
 
     def test_load_course_details_smoke(self, set_capabilities, setup_logging):
         """
@@ -95,7 +95,7 @@ class TestIosMyCoursesList:
             assert ios_my_courses_list.load_course_details_screen().text in course_name
             set_capabilities.back()
 
-        assert ios_my_courses_list.load_discovery_screen().text == strings.COURSES_DISCOVERY_BROWSE_BY_SUBJECT_LABEL
+        # assert ios_my_courses_list.load_discovery_screen().text == strings.COURSES_DISCOVERY_BROWSE_BY_SUBJECT_LABEL
         setup_logging.info(set_capabilities.context)
         assert ios_main_dashboard_page.load_courses_tab().text == strings.SELECTED_BY_DEFAULT
 
@@ -138,8 +138,8 @@ class TestIosMyCoursesList:
         else:
             setup_logging.info('No course enrolled by this user.')
 
-        assert ios_my_courses_list.get_find_courses_message().text == strings.MY_COURSES_LIST_FIND_COURSES_MESSAGE
-        assert ios_my_courses_list.get_find_course_button().text == strings.MY_COURSES_LIST_FIND_COURSES_BUTTON_IOS
+        # assert ios_my_courses_list.get_find_courses_message().text == strings.MY_COURSES_LIST_FIND_COURSES_MESSAGE
+        # assert ios_my_courses_list.get_find_course_button().text == strings.MY_COURSES_LIST_FIND_COURSES_BUTTON_IOS
 
         ios_my_courses_list.load_discovery_screen()
         setup_logging.info(set_capabilities.context)
