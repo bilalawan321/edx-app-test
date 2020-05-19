@@ -143,7 +143,7 @@ class IosMyCoursesList(IosBasePage):
                                                        ))
         self.driver.swipe(horizontal_start_point, vertical_start_point, horizontal_end_point, vertical_end_point, 500)
 
-        self.get_find_course_button().click()
+        # self.get_find_course_button().click()
 
         output = self.global_contents.wait_for_element_visibility(
             self.driver,
