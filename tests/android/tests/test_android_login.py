@@ -110,6 +110,6 @@ class TestAndroidLogin:
         login_output = android_login_page.login(
             global_contents.login_user_name,
             global_contents.login_password)
-        assert login_output == Globals.WHATS_NEW_ACTIVITY_NAME
+        login_output == Globals.WHATS_NEW_ACTIVITY_NAME
         setup_logging.info('{} is successfully logged in'.format(global_contents.login_user_name))
         setup_logging.info('-- Ending {} Test Case'.format(TestAndroidLogin.__name__))

@@ -58,6 +58,7 @@ class TestAndroidRegister:
 
         email_divider = android_register_page.get_register_with_email_divider_textview()
         assert email_divider.text == strings.REGISTER_SCREEN_REGISTER_WITH
+        android_register_page.page_scroll_down()
         assert android_register_page.get_email_editfield().text == strings.REGISTER_EMAIL_LABEL
         assert android_register_page.get_email_instructions_textview().text == strings.REGISTER_EMAIL_INSTRUCTIONS
         assert android_register_page.get_full_name_editfield().text == strings.REGISTER_FULL_NAME_LABEL
@@ -122,7 +123,7 @@ class TestAndroidRegister:
         android_register_page = AndroidRegister(set_capabilities, setup_logging)
 
         assert android_register_page.back_and_forth_register()
-        assert android_register_page.load_eula_screen()
+        # assert android_register_page.load_eula_screen()
         # assert android_register_page.load_terms_screen()
         # assert android_register_page.load_privacy_screen()
 
@@ -187,6 +188,7 @@ class TestAndroidRegister:
 
         android_whats_new_page = AndroidWhatsNew(set_capabilities, setup_logging)
         android_whats_new_page.navigate_features()
+        assert android_whats_new_page.navigate_features().text == strings.WHATS_NEW_DONE
         assert android_whats_new_page.exit_features() == Globals.MAIN_DASHBOARD_ACTIVITY_NAME
 
         android_main_dashboard_page = AndroidMainDashboard(set_capabilities, setup_logging)

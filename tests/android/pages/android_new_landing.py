@@ -97,6 +97,11 @@ class AndroidNewLanding(AndroidBasePage):
             webdriver element: Login Button element
         """
 
+        self.global_contents.wait_for_element_visibility(
+            self.driver,
+            android_elements.new_landing_log_in_button
+        )
+
         return self.global_contents.wait_and_get_element(
             self.driver,
             android_elements.new_landing_log_in_button

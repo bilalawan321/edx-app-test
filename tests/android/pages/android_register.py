@@ -98,9 +98,10 @@ class AndroidRegister(AndroidBasePage):
         Returns:
               webdriver element: Email Element
         """
+
         return self.global_contents.get_all_views_on_screen_by_id(
             self.driver,
-            android_elements.register_all_editfields)[self.global_contents.first_existence]
+            android_elements.register_all_editfields)[self.global_contents.third_existence]
 
     def get_email_instructions_textview(self):
         """
@@ -112,7 +113,7 @@ class AndroidRegister(AndroidBasePage):
 
         return self.global_contents.get_all_views_on_screen_by_id(
             self.driver,
-            android_elements.register_input_instruction_all_textviews)[self.global_contents.first_existence]
+            android_elements.register_input_instruction_all_textviews)[self.global_contents.third_existence]
 
     def get_full_name_editfield(self):
         """
@@ -124,7 +125,7 @@ class AndroidRegister(AndroidBasePage):
 
         return self.global_contents.get_all_views_on_screen_by_id(
             self.driver,
-            android_elements.register_all_editfields)[self.global_contents.second_existence]
+            android_elements.register_all_editfields)[self.global_contents.first_existence]
 
     def get_full_name_instructions_textview(self):
         """
@@ -136,7 +137,7 @@ class AndroidRegister(AndroidBasePage):
 
         return self.global_contents.get_all_views_on_screen_by_id(
             self.driver,
-            android_elements.register_input_instruction_all_textviews)[self.global_contents.second_existence]
+            android_elements.register_input_instruction_all_textviews)[self.global_contents.first_existence]
 
     def get_user_name_editfield(self):
         """
@@ -148,7 +149,7 @@ class AndroidRegister(AndroidBasePage):
 
         return self.global_contents.get_all_views_on_screen_by_id(
             self.driver,
-            android_elements.register_all_editfields)[self.global_contents.third_existence]
+            android_elements.register_all_editfields)[self.global_contents.second_existence]
 
     def get_user_name_instructions_textview(self):
         """
@@ -160,7 +161,7 @@ class AndroidRegister(AndroidBasePage):
 
         return self.global_contents.get_all_views_on_screen_by_id(
             self.driver,
-            android_elements.register_input_instruction_all_textviews)[self.global_contents.third_existence]
+            android_elements.register_input_instruction_all_textviews)[self.global_contents.second_existence]
 
     def get_password_editfield(self):
         """
@@ -280,6 +281,8 @@ class AndroidRegister(AndroidBasePage):
               webdriver element: Create My Account Element
         """
 
+        self.page_scroll_down()
+
         return self.global_contents.wait_and_get_element(
             self.driver,
             android_elements.register_create_my_account_textview
@@ -305,7 +308,7 @@ class AndroidRegister(AndroidBasePage):
         Returns:
              bool: Returns True if app is back on Login screen from EULA
         """
-        self.global_contents.scroll_from_element(self.driver, self.get_password_editfield())
+        self.page_scroll_down()
 
         self.global_contents.get_element_coordinates(self.driver, android_elements.register_agreement_textview)
 
@@ -391,7 +394,7 @@ class AndroidRegister(AndroidBasePage):
         show_hide_optional_fields = self.get_show_optional_fields_textview()
         show_hide_optional_fields.click()
 
-        self.global_contents.scroll_from_element(self.driver, show_hide_optional_fields)
+        self.page_scroll_down()
 
         return self.global_contents.wait_and_get_element(
             self.driver,
@@ -439,10 +442,6 @@ class AndroidRegister(AndroidBasePage):
             str: Whats New Activity Name
         """
 
-        self.get_email_editfield().click()
-        self.get_email_editfield().send_keys(email)
-        self.driver.hide_keyboard()
-
         self.get_full_name_editfield().click()
         self.get_full_name_editfield().send_keys(full_name)
         self.driver.hide_keyboard()
@@ -451,13 +450,17 @@ class AndroidRegister(AndroidBasePage):
         self.get_user_name_editfield().send_keys(user_name)
         self.driver.hide_keyboard()
 
+        self.get_email_editfield().click()
+        self.get_email_editfield().send_keys(email)
+        self.driver.hide_keyboard()
+
         self.get_password_editfield().click()
         self.get_password_editfield().send_keys(password)
         self.driver.hide_keyboard()
 
         self.select_country(country)
 
-        self.page_scroll_down()
+        # self.page_scroll_down()
         self.get_create_my_account_textview().click()
 
         return self.global_contents.wait_for_android_activity_to_load(
@@ -607,7 +610,7 @@ class AndroidRegister(AndroidBasePage):
         return self.global_contents.get_all_views_on_screen_by_id(
             self.driver,
             android_elements.register_validate_editfield_error_textview
-            )[self.global_contents.first_existence]
+            )[self.global_contents.third_existence]
 
     def get_full_name_validation_textview(self):
         """
@@ -619,7 +622,7 @@ class AndroidRegister(AndroidBasePage):
 
         return self.global_contents.get_all_views_on_screen_by_id(
             self.driver,
-            android_elements.register_validate_editfield_error_textview)[self.global_contents.second_existence]
+            android_elements.register_validate_editfield_error_textview)[self.global_contents.first_existence]
 
     def get_username_validation_textview(self):
         """
@@ -629,11 +632,11 @@ class AndroidRegister(AndroidBasePage):
               Webdriver element: Username validation Element
         """
 
-        self.global_contents.scroll_from_element(self.driver, self.get_password_editfield())
+        self.page_scroll_down()
 
         return self.global_contents.get_all_views_on_screen_by_id(
             self.driver,
-            android_elements.register_validate_editfield_error_textview)[self.global_contents.third_existence]
+            android_elements.register_validate_editfield_error_textview)[self.global_contents.second_existence]
 
     def get_password_validation_textview(self):
         """
