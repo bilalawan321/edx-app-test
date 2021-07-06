@@ -78,6 +78,9 @@ course_details_last_accessed_textview = 'Last Accessed'
 
 # COURSE DISCOVERY SCREEN
 course_discovery_textview = 'PopularSubjectsViewController:title-label'
+search_icon = 'Search course'
+browse_by_subject_icon = 'PopularSubjectsViewController:title-label'
+total_number_of_available_courses = 'js-result-msg hide-phone'
 
 # MY ACCOUNT SCREEN
 account_options = 'AccountViewController:title-label'

@@ -59,7 +59,9 @@ def set_capabilities(setup_logging):
         desired_capabilities['platformVersion'] = globals_contents.ios_platform_version
         desired_capabilities['deviceName'] = globals_contents.ios_device_name
         # Required when executing on real iOS device
-        # desired_capabilities['fullReset'] = True
+        desired_capabilities['fullReset'] = True
+        # desired_capabilities['autoWebview'] = True
+        desired_capabilities['app'] = '/Users/bilalawan/Downloads/edX.app'
         desired_capabilities['appWaitDuration'] = '50000'
         desired_capabilities['bundleId'] = globals_contents.AUT_PACKAGE_NAME
 
